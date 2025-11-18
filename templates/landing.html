@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoPark! - Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="header">
+        <!-- TOP LEFT HEADER BRANDING -->
+        <div class="logo-branding">
+            <h1 class="logo-title">GoPark!</h1>
+            <p class="logo-tagline">No Stress. Just Park.</p>
+        </div>
+        <nav class="nav">
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/services">Services</a>
+            <a href="/contact">Contact</a>
+        </nav>
+    </header>
+
+    <div class="main-content">
+        <!-- LEFT SIDE: Branding Area (Large Branding) -->
+        <div class="branding-area">
+            <h1 class="title">GoPark!</h1>
+            <p class="tagline">No Stress. Just Park.</p>
+        </div>
+        
+        <!-- RIGHT SIDE: Auth Area (Form only) -->
+        <div class="auth-area">
+            
+            <!-- Display Flask message if present -->
+            {% if message %}
+                <div style="background-color: rgba(0, 224, 255, 0.2); color: #33FFFF; padding: 10px; border-radius: 5px; margin-bottom: 15px; border: 1px solid #33FFFF;">
+                    {{ message }}
+                </div>
+            {% endif %}
+
+            <div class="auth-box">
+                <h3>Login to GoPark!</h3>
+                <form action="/login" method="post">
+                    <input type="text" placeholder="Username" name="username" required>
+                    <input type="password" placeholder="Password" name="password" required>
+                    <button type="submit">LOGIN</button>
+                </form>
+                
+                <!-- Forgot Password Link -->
+                <p style="margin-top: 10px; margin-bottom: 0;">
+                    <a href="#" class="signup-link" style="font-size: 0.9em;">Forgot Password?</a>
+                </p>
+
+                <p class="signup-link">
+                    Don't have an account? <a href="/signup">Signup</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,315 @@
+/* --- Global High-Tech Theme --- */
+body {
+    margin: 0;
+    padding: 0;
+    /* Changed general body font to Arial (sans-serif) for readability on all elements EXCEPT title/tagline */
+    font-family: Arial, sans-serif;  
+    color: #FFFFFF;
+    
+    background: 
+        linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), 
+        url('https://i.imgur.com/your-gopark-image.jpg') no-repeat center center fixed; 
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- Navigation & Header --- */
+.header {
+    display: flex;
+    justify-content: space-between;  
+    align-items: center;
+    padding: 20px 40px;
+    background-color: rgba(10, 25, 40, 0.95);  
+    border-bottom: 2px solid #00E0FF;  
+    box-shadow: 0 4px 15px rgba(0, 224, 255, 0.1);
+}
+
+.logo-branding {
+    /* Container for the logo and tagline in the header */
+    text-align: left;
+    line-height: 1.2;
+}
+
+.logo-title {
+    /* Style for GoPark! text in the header */
+    font-family: 'Consolas', 'Courier New', monospace;  
+    font-size: 1.8em;  
+    margin: 0;
+    font-weight: 700;
+    color: #FFFFFF;  
+    letter-spacing: 3px;  
+    text-shadow: 
+        0 0 5px #00E0FF,  
+        0 0 10px rgba(0, 224, 255, 0.5);
+}
+
+.logo-tagline {
+    /* Style for the tagline under the logo in the header */
+    font-family: 'Consolas', 'Courier New', monospace;  
+    font-size: 0.8em;  
+    margin: 0;
+    font-weight: 300;
+    color: #B0E0FF;
+    letter-spacing: 1px;
+}
+
+.nav {
+    display: flex;
+}
+
+.nav a {
+    color: #B0E0FF;  
+    text-decoration: none;
+    margin-left: 30px;
+    font-weight: 500;
+    font-size: 1.05em;
+    transition: color 0.3s, text-shadow 0.3s;
+}
+
+.nav a:hover {
+    color: #00E0FF;  
+    text-shadow: 0 0 5px #00E0FF;  
+}
+
+/* ------------------------------------------------------------------- */
+/* --- MAIN CONTENT LAYOUT --- */
+/* ------------------------------------------------------------------- */
+
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    padding: 50px 50px;  
+}
+
+/* Layout for Login/Signup (2-column asymmetric) */
+.main-content:not(.centered-content) {
+    justify-content: space-around;
+    align-items: center;  
+}
+
+/* Layout for About/Services/Contact (1-column centered) */
+.main-content.centered-content {
+    flex-direction: column;
+    align-items: center;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* --- LEFT SIDE: Branding Area (Large Branding on Login/Signup) --- */
+.branding-area {
+    width: 45%;  
+    display: flex;  
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;  
+    
+    /* Pushes the content up slightly, lifting it above the vertical center */
+    margin-bottom: 100px;  
+}
+
+/* --- RIGHT SIDE: Authentication Area (Form Box on Login/Signup) --- */
+.auth-area {
+    width: 45%;  
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  
+    align-items: center;  
+}
+
+/* --- TITLE STYLING --- */
+
+/* Large title for the focus area (used on landing/signup left side) */
+.branding-area .title {
+    font-family: 'Consolas', 'Courier New', monospace;  
+    font-size: 6em;  
+    margin-bottom: 0px;
+    font-weight: 700;
+    color: #FFFFFF;  
+    letter-spacing: 5px;  
+    text-shadow: 
+        0 0 7px #00E0FF,  
+        0 0 15px #00E0FF,
+        0 0 25px rgba(0, 224, 255, 0.5);
+}
+
+/* Tagline for the focus area (used on landing/signup left side) */
+.branding-area .tagline {
+    font-family: 'Consolas', 'Courier New', monospace;  
+    font-size: 1.8em;  
+    margin-top: 5px;
+    margin-bottom: 0px;  
+    font-weight: 300;
+    color: #B0E0FF;
+    letter-spacing: 1px;
+}
+
+/* Titles for pages like About, Services, Contact */
+.main-content.centered-content .title {
+    font-size: 3.5em;  
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.main-content.centered-content .tagline {
+      font-size: 1.4em;
+      margin-bottom: 30px;
+      text-align: center;
+}
+
+/* ------------------------------------------------------------------- */
+/* --- HIGH-TECH SKELETAL BOX DESIGN (Applies to all forms/content) --- */
+/* ------------------------------------------------------------------- */
+
+.auth-box {
+    background-color: rgba(10, 25, 40, 0.5);  
+    padding: 35px 50px;
+    border-radius: 5px;
+    border: 1px solid #00E0FF;  
+    box-shadow: 0 0 20px rgba(0, 224, 255, 0.8);  
+    max-width: 420px; /* Default width for login/signup */
+    width: 100%;
+    text-align: center;
+}
+
+/* Larger box for content pages */
+.content-box {
+    max-width: 100%; /* Allows it to take the full width of the centered-content container (max-width: 900px) */
+    text-align: left; /* Content should be left-aligned for readability */
+    padding: 40px 60px;
+}
+
+/* *** NEW FORM BOX STYLE for Contact Page *** */
+.form-box {
+    background-color: rgba(15, 35, 50, 0.6); /* Slightly different background for distinction */
+    padding: 30px 40px;
+    border-radius: 5px;
+    border: 1px solid #33FFFF; /* Brighter border */
+    box-shadow: 0 0 15px rgba(51, 255, 255, 0.7); /* Matching shadow */
+    margin-top: 30px; /* Space from contact info */
+}
+/* *** END NEW FORM BOX STYLE *** */
+
+.auth-box h3 {
+    margin-top: 0;
+    color: #00E0FF;
+    font-weight: 600;
+    letter-spacing: 1px;
+    border-bottom: 1px dashed #33FFFF;  
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+/* Content List Styling */
+.high-tech-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.high-tech-list li {
+    background-color: rgba(0, 224, 255, 0.05);
+    padding: 10px;
+    margin-bottom: 8px;
+    border-left: 3px solid #00E0FF;
+    border-radius: 3px;
+    transition: background-color 0.2s;
+}
+
+.high-tech-list li:hover {
+    background-color: rgba(0, 224, 255, 0.1);
+}
+
+.service-feature {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px dashed rgba(0, 224, 255, 0.3);
+}
+
+.service-feature:last-child {
+    border-bottom: none;
+}
+
+
+/* --- Form Fields (Inputs) --- */
+.auth-box input[type="text"],
+.auth-box input[type="password"],
+.auth-box input[type="email"],
+.auth-box input[type="tel"],
+.form-box input[type="text"],
+.form-box input[type="email"] {
+    width: calc(100% - 22px);
+    padding: 12px;
+    margin-bottom: 15px;
+    border: none;  
+    border-bottom: 2px solid #00E0FF;  
+    background-color: transparent;  
+    color: white;
+    border-radius: 0;  
+    box-shadow: none;
+    transition: border-bottom-color 0.3s;
+}
+
+.auth-box input:focus,
+.form-box input:focus {
+    border-bottom-color: #33FFFF;
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0, 224, 255, 0.4);  
+}
+
+/* --- Button Styling (Neon Border/Fill) --- */
+.auth-box button,
+.form-box button {
+    width: 100%;
+    padding: 14px;
+    border: 2px solid #00E0FF;  
+    border-radius: 3px;
+    background-color: rgba(0, 224, 255, 0.1);  
+    color: #00E0FF;  
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(0, 224, 255, 0.6);
+    transition: background-color 0.2s, box-shadow 0.2s, color 0.2s;
+}
+
+.auth-box button:hover,
+.form-box button:hover {
+    background-color: #00E0FF;  
+    color: #0A1928;  
+    box-shadow: 0 0 20px #33FFFF;
+}
+
+/* --- Signup Link --- */
+.signup-link {
+    text-align: center;  
+    margin-top: 20px;
+    font-size: 0.9em;
+    color: #90A4AE;
+}
+
+.signup-link a {
+    color: #00E0FF;  
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.signup-link a:hover {
+    color: #33FFFF;
+}
+
+/* Applies to contact form textarea */
+.auth-box textarea,
+.form-box textarea {
+    width: calc(100% - 22px);
+    height: 100px;  
+    padding: 10px;  
+    margin-bottom: 15px;  
+    border: none;  
+    border-bottom: 2px solid #00E0FF;  
+    background-color: transparent;  
+    color: white;  
+    border-radius: 0;
+}

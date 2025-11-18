@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoPark! - Contact Us</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="header">
+        <div class="logo-branding">
+            <h1 class="logo-title">GoPark!</h1>
+            <p class="logo-tagline">No Stress. Just Park.</p>
+        </div>
+        <nav class="nav">
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/services">Services</a>
+            <a href="/contact">Contact</a>
+        </nav>
+    </header>
+
+    <div class="main-content centered-content">
+        <h1 class="title">GoPark! Support</h1>
+        <p class="tagline">We're here to assist you with your parking reservations.</p>
+        
+        <div class="auth-box content-box" style="text-align: left;">
+            <h3 style="text-align: center;">Get in Touch</h3>
+            
+            <div class="contact-info">
+                <h4 style="color: #00E0FF; margin-top: 20px;">Administrative Contact</h4>
+                <p><strong>Admin:</strong> Ms. Steffany Paburada</p>
+                <p><strong>Phone:</strong> 09053838721</p>
+                <p><strong>Email:</strong> support@gopark.ph</p>
+            </div>
+            
+            <div class="contact-info">
+                <h4 style="color: #00E0FF; margin-top: 20px;">Office Location & Hours</h4>
+                <p><strong>Address:</strong> 123 Tech Drive, BGC, Taguig City</p>
+                <p><strong>Business Hours:</strong> We are open **24/7** to assist with all your parking needs.</p>
+                
+                </div>
+            
+            <div class="form-box">
+                <form action="#" method="post">
+                    <h4 style="color: #00E0FF; border-bottom: 1px dashed #33FFFF; padding-bottom: 5px; margin-top: 0;">Send Us a Message</h4>
+                    <input type="text" placeholder="Your Name" name="contact_name" required>
+                    <input type="email" placeholder="Your Email" name="contact_email" required>
+                    <textarea placeholder="Your Message or Inquiry" name="contact_message" required></textarea>
+                    <button type="submit">SUBMIT INQUIRY</button>
+                </form>
+            </div>
+            </div>
+    </div>
+</body>
+</html>
