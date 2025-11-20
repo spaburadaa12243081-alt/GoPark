@@ -6,15 +6,13 @@
     <title>GoPark! - Sign Up</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     
-    <!-- Custom style for the error message -->
     <style>
         .error-message {
-            color: #FF4136; /* Red color */
+            color: #FF4136;
             font-size: 0.85rem;
             margin-top: 5px;
-            height: 18px; /* Reserve space to prevent layout shift */
+            height: 18px;
         }
-        /* Style for the OTP input and button next to each other */
         .otp-group {
             display: flex;
             align-items: center;
@@ -22,11 +20,9 @@
         }
         .otp-group input {
             flex-grow: 1;
-            /* Override default input margin */
-            margin-bottom: 0 !important; 
+            margin-bottom: 0 !important;
         }
         .otp-group button {
-            /* Keep button styling consistent */
             padding: 10px 15px;
             margin-top: 20px;
         }
@@ -34,7 +30,6 @@
             font-size: 0.9em;
             margin-top: 5px;
             margin-bottom: 10px;
-            /* Make the mock message stand out */
             background-color: rgba(0, 224, 255, 0.2); 
             padding: 5px;
             border-radius: 3px;
@@ -43,7 +38,6 @@
 </head>
 <body>
     <header class="header">
-        <!-- TOP LEFT HEADER BRANDING -->
         <div class="logo-branding">
             <h1 class="logo-title">GoPark!</h1>
             <p class="logo-tagline">No Stress. Just Park.</p>
@@ -57,51 +51,46 @@
     </header>
 
     <div class="main-content">
-        <!-- LEFT SIDE: Branding Area -->
         <div class="branding-area">
             <h1 class="title">GoPark!</h1>
             <p class="tagline">No Stress. Just Park.</p>
         </div>
         
-        <!-- RIGHT SIDE: Auth Area (Form only) -->
         <div class="auth-area">
             <div class="auth-box">
                 <h3>Create Your GoPark! Account</h3>
+
+                <!-- SIGNUP FORM -->
                 <form action="/signup" method="post" id="signupForm">
-                    <input type="text" placeholder="Username" name="name" required>
+
+                    <!-- FIXED (name="username") -->
+                    <input type="text" placeholder="Username" name="username" required>
+
                     <input type="email" placeholder="Email Address" name="email" id="email" required>
-                    
-                    <!-- Create Password -->
+
                     <input type="password" placeholder="Create Password" name="password" id="password" required onkeyup="validateForm()">
-                    
-                    <!-- Confirm Password -->
+
                     <input type="password" placeholder="Confirm Password" name="confirm_password" id="confirm_password" required onkeyup="validateForm()">
-                    
-                    <!-- Password Error Message -->
+
                     <div id="password-mismatch-error" class="error-message" style="display: none;">
                         Passwords do not match.
                     </div>
-                    
-                    <!-- New: OTP Input Group -->
+
                     <div class="otp-group">
                         <input type="text" placeholder="Enter OTP Code" name="otp_code" id="otp_code" onkeyup="validateForm()">
                         <button type="button" id="send-code-button" onclick="sendOTP()">Send Code</button>
                     </div>
 
-                    <!-- OTP Status/Mock Message -->
-                    <div id="otp-status-message" class="otp-status" style="color: #33FFFF; display: none;">
-                        
-                    </div>
+                    <div id="otp-status-message" class="otp-status" style="color: #33FFFF; display: none;"></div>
 
-                    <!-- OTP Error Message -->
                     <div id="otp-mismatch-error" class="error-message" style="display: none;">
                         The entered code is incorrect.
                     </div>
 
-                    <!-- Hidden field to store the expected OTP (Mocked) -->
                     <input type="hidden" id="expected_otp" value="">
 
                     <button type="submit" id="signup-button" disabled>SIGN UP</button>
+
                 </form>
 
                 <p class="signup-link">
@@ -112,12 +101,6 @@
     </div>
 
     <script>
-        // *** IMPORTANT NOTE ON OTP: ***
-        // This 'sendOTP' function is a MOCK (placeholder). In a live environment, 
-        // you would use a secure, server-side SMTP library (like Flask-Mail) 
-        // to generate the code and send the actual email. The hardcoded '123456' 
-        // is for demonstration only.
-        
         function sendOTP() {
             const emailInput = document.getElementById('email');
             const statusMessage = document.getElementById('otp-status-message');
@@ -128,13 +111,12 @@
                 return;
             }
 
-            // --- MOCK OTP GENERATION ---
-            expectedOtpField.value = '123456'; 
-            // ---------------------------
-            
+            expectedOtpField.value = '123456'; // MOCK OTP
+
             statusMessage.style.display = 'block';
             statusMessage.innerHTML = `Code sent to ${emailInput.value}! Enter **123456** to proceed.`;
-            validateForm(); // Revalidate form state
+
+            validateForm();
         }
         
         function validateForm() {
@@ -150,39 +132,21 @@
             let isPasswordMatch = (password === confirmPassword) && password.length > 0;
             let isOtpValid = false;
 
-            // 1. Validate Passwords
             if (password && confirmPassword) {
-                if (!isPasswordMatch) {
-                    passMismatchError.style.display = 'block';
-                } else {
-                    passMismatchError.style.display = 'none';
-                }
+                passMismatchError.style.display = isPasswordMatch ? 'none' : 'block';
             } else {
                 passMismatchError.style.display = 'none';
             }
             
-            // 2. Validate OTP
-            if (expectedOtp) { // OTP has been mocked/sent
+            if (expectedOtp) {
                 if (otpCode === expectedOtp) {
                     isOtpValid = true;
                     otpMismatchError.style.display = 'none';
                 } else {
-                    isOtpValid = false;
-                    // Only show OTP error if the user has typed something and it's wrong
-                    if (otpCode.length > 0) {
-                        otpMismatchError.style.display = 'block';
-                    } else {
-                         otpMismatchError.style.display = 'none';
-                    }
+                    otpMismatchError.style.display = otpCode.length > 0 ? 'block' : 'none';
                 }
-            } else {
-                // OTP hasn't been sent yet, so it cannot be valid
-                isOtpValid = false;
-                otpMismatchError.style.display = 'none';
             }
 
-            // 3. Enable/Disable Sign Up button
-            // Button is enabled ONLY if Passwords match AND OTP is valid
             submitButton.disabled = !(isPasswordMatch && isOtpValid);
         }
     </script>

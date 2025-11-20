@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoPark! - New Reservation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* --- Reservation Dashboard Specific Styles --- */
+        
+        .reservation-container {
+            /* Container to hold the form and the map side-by-side */
+            display: flex;
+            gap: 40px; /* Space between the two sections */
+            width: 100%;
+            max-width: 1100px; /* Increased max-width for the dashboard view */
+            margin: 0 auto;
+            padding: 20px 0;
+            align-items: flex-start; /* Align content to the top */
+        }
+
+        .reservation-form-area {
+            /* Left side: The Reservation Form */
+            flex: 1; /* Takes up one part of the space */
+            min-width: 400px; /* Ensure form has decent width */
+        }
+
+        .parking-map-area {
+            /* Right side: The Parking Map */
+            flex: 1.5; /* Takes up 1.5 times the space of the form (wider) */
+            background-color: rgba(10, 25, 40, 0.7); /* Slightly darker map background */
+            border: 2px solid #00E0FF; 
+            box-shadow: 0 0 25px rgba(0, 224, 255, 0.8);
+            padding: 30px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .form-title {
+            color: #00E0FF;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            text-align: left;
+            border-bottom: 1px dashed #33FFFF;
+            padding-bottom: 10px;
+        }
+
+        /* Group for Date and Time Slot */
+        .time-slot-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .time-slot-group input,
+        .time-slot-group select {
+            flex: 1;
+            /* Inherit input styling but adjust for date/time controls */
+            width: 100%; /* Override default input width to fit flexbox */
+            padding: 12px;
+            border: none;
+            border-bottom: 2px solid #00E0FF;
+            background-color: transparent;
+            color: white;
+            border-radius: 0;
+            box-shadow: none;
+            transition: border-bottom-color 0.3s;
+        }
+
+        .time-slot-group select {
+            /* Style for the dropdown arrow on select elements */
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300E0FF'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            padding-right: 30px;
+        }
+
+
+        /* --- Parking Map Grid Styles --- */
+        .parking-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr; /* Left, Center (Main), Right zones */
+            gap: 10px;
+            padding: 20px;
+            border: 1px solid rgba(0, 224, 255, 0.4);
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Area representing the main driving lane/walkway */
+        .parking-lane {
+            grid-column: 1 / -1;
+            height: 30px;
+            background-color: rgba(0, 224, 255, 0.05);
+            border: 1px dashed rgba(0, 224, 255, 0.3);
+            margin: 5px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #B0E0FF;
+            font-size: 0.8em;
+        }
+
+        .spot-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .spot-row {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .parking-spot {
+            width: 50px; /* Width of the spot visual */
+            height: 30px; /* Height of the spot visual */
+            line-height: 30px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.7em;
+            font-weight: bold;
+            color: white;
+            transition: transform 0.1s, box-shadow 0.2s;
+            position: relative;
+        }
+
+        /* Available Spot */
+        .spot-available {
+            background-color: rgba(0, 255, 0, 0.1);
+            border: 1px solid #0F0;
+            box-shadow: 0 0 5px rgba(0, 255, 0, 0.4);
+            color: #0F0;
+        }
+
+        .spot-available:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 10px #0F0;
+        }
+
+        /* Booked/Reserved Spot (Red on the image) */
+        .spot-reserved {
+            background-color: rgba(255, 0, 0, 0.1);
+            border: 1px solid #F00;
+            color: #F00;
+            cursor: not-allowed;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        /* Selected Spot (Light Blue on the image) */
+        .spot-selected {
+            background-color: rgba(0, 224, 255, 0.8); /* Strong background */
+            border: 2px solid #33FFFF;
+            box-shadow: 0 0 15px #33FFFF;
+            color: #0A1928; /* Darker text for contrast */
+            transform: scale(1.1);
+            z-index: 10;
+        }
+
+        .selected-info {
+            background-color: rgba(10, 25, 40, 0.9);
+            border: 1px solid #00E0FF;
+            padding: 10px;
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+
+        .selected-info strong {
+            color: #33FFFF;
+        }
+
+        /* Adjust button group for the action buttons */
+        .action-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .action-group button {
+            flex: 1;
+        }
+
+        .action-group .cancel-button {
+            /* Invert theme for cancel button */
+            background-color: transparent;
+            color: #FF4136;
+            border: 2px solid #FF4136;
+            box-shadow: none;
+        }
+
+        .action-group .cancel-button:hover {
+            background-color: rgba(255, 65, 54, 0.1);
+            color: #FF4136;
+            box-shadow: 0 0 10px #FF4136;
+        }
+
+        /* Ensure the main button is styled correctly */
+        .auth-box button {
+            width: auto; /* Allow the button to size based on flex container */
+        }
+        
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-branding">
+            <h1 class="logo-title">GoPark!</h1>
+            <p class="logo-tagline">No Stress. Just Park.</p>
+        </div>
+        <nav class="nav">
+            <a href="/reservation" style="color: #00E0FF;">Reservation</a>
+            <a href="/profile">Profile</a> <a href="/history">History</a> <a href="/" style="color: #FF4136; border: 1px solid #FF4136; padding: 5px 10px; border-radius: 3px;">Logout</a>
+        </nav>
+    </header>
+
+    <div class="main-content centered-content">
+        <div class="reservation-container">
+            
+            <div class="reservation-form-area auth-box content-box">
+                <h3 class="form-title">New Reservation</h3>
+                <form action="#" method="post">
+                    
+                    <h4 style="color: #B0E0FF; margin-top: 10px; text-align: left;">User Details</h4>
+                    <input type="text" placeholder="Full Name" name="full_name" required>
+                    <input type="email" placeholder="Email Address" name="email" required>
+                    
+                    <h4 style="color: #B0E0FF; margin-top: 20px; text-align: left;">Vehicle & Spot</h4>
+                    <input type="text" placeholder="Vehicle Licence Plate" name="licence_plate" required>
+                    <p style="color: #90A4AE; font-size: 0.9em; margin-bottom: 5px; text-align: left;">Select Your Spot</p>
+
+                    <h4 style="color: #B0E0FF; margin-top: 20px; text-align: left;">Time Slot</h4>
+                    <div class="time-slot-group">
+                        <input type="date" placeholder="Date" name="date" required>
+                        <select name="time_slot" required>
+                            <option value="" disabled selected>Time Slot</option>
+                            <option value="0800-1000">08:00 - 10:00</option>
+                            <option value="1000-1200">10:00 - 12:00</option>
+                            <option value="1200-1400">12:00 - 14:00</option>
+                            </select>
+                    </div>
+
+                </form>
+                
+                <div class="action-group" style="margin-top: 40px;">
+                    <button type="submit" class="auth-box-button" style="width: 100%;">CONFIRM RESERVATION</button>
+                </div>
+            </div>
+
+            <div class="parking-map-area">
+                <h4 style="color: #B0E0FF; margin-top: 0;">Parking Layout - Level B-07</h4>
+                
+                <div class="parking-grid">
+                    
+                    <div class="spot-container" style="justify-self: end;">
+                        <div class="parking-spot spot-reserved">A-01</div>
+                        <div class="parking-spot spot-available">A-02</div>
+                        <div class="parking-spot spot-available">A-03</div>
+                        <div class="parking-spot spot-reserved">A-04</div>
+                    </div>
+
+                    <div class="spot-container" style="flex-direction: row; justify-content: space-around;">
+                        <div class="spot-row">
+                            <div class="parking-spot spot-reserved">B-01</div>
+                            <div class="parking-spot spot-available">B-02</div>
+                            <div class="parking-spot spot-reserved">B-03</div>
+                            <div class="parking-spot spot-reserved">B-04</div>
+                            <div class="parking-spot spot-available">B-05</div>
+                            <div class="parking-spot spot-reserved">B-06</div>
+                        </div>
+                        
+                        <div class="parking-lane">DRIVING LANE</div>
+
+                        <div class="spot-row">
+                            <div class="parking-spot spot-available">C-01</div>
+                            <div class="parking-spot spot-available">C-02</div>
+                            <div class="parking-spot spot-available">C-03</div>
+                            <div class="parking-spot spot-available">C-04</div>
+                            <div class="parking-spot spot-available">C-05</div>
+                            <div class="parking-spot spot-available">C-06</div>
+                        </div>
+                    </div>
+
+                    <div class="spot-container" style="justify-self: start;">
+                        <div class="parking-spot spot-available">D-01</div>
+                        <div class="parking-spot spot-reserved">D-02</div>
+                        <div class="parking-spot spot-available">D-03</div>
+                        <div class="parking-spot spot-reserved">D-04</div>
+                    </div>
+                </div>
+
+                <div class="selected-info">
+                    Headed: <strong style="margin-right: 20px;">B-07</strong> Your Selected Spot: <strong id="selected-spot-display">B-07</strong>
+                </div>
+
+                <div class="action-group" style="justify-content: flex-end; margin-top: 15px;">
+                    <button type="button" class="cancel-button" style="width: 150px;">Cancel</button>
+                </div>
+                
+            </div>
+            
+        </div>
+    </div>
+</body>
+</html>

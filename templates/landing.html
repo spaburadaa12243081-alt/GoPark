@@ -8,7 +8,6 @@
 </head>
 <body>
     <header class="header">
-        <!-- TOP LEFT HEADER BRANDING -->
         <div class="logo-branding">
             <h1 class="logo-title">GoPark!</h1>
             <p class="logo-tagline">No Stress. Just Park.</p>
@@ -18,20 +17,17 @@
             <a href="/about">About</a>
             <a href="/services">Services</a>
             <a href="/contact">Contact</a>
-        </nav>
+            </nav>
     </header>
 
     <div class="main-content">
-        <!-- LEFT SIDE: Branding Area (Large Branding) -->
         <div class="branding-area">
             <h1 class="title">GoPark!</h1>
             <p class="tagline">No Stress. Just Park.</p>
         </div>
         
-        <!-- RIGHT SIDE: Auth Area (Form only) -->
         <div class="auth-area">
             
-            <!-- Display Flask message if present -->
             {% if message %}
                 <div style="background-color: rgba(0, 224, 255, 0.2); color: #33FFFF; padding: 10px; border-radius: 5px; margin-bottom: 15px; border: 1px solid #33FFFF;">
                     {{ message }}
@@ -46,7 +42,6 @@
                     <button type="submit">LOGIN</button>
                 </form>
                 
-                <!-- Forgot Password Link -->
                 <p style="margin-top: 10px; margin-bottom: 0;">
                     <a href="#" class="signup-link" style="font-size: 0.9em;">Forgot Password?</a>
                 </p>
