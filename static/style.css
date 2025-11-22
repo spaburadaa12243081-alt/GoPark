@@ -181,6 +181,34 @@ body {
     padding: 40px 60px;
 }
 
+/* *** RESERVATION PAGE BOX STYLES (NEW ADDITIONS) *** */
+
+/* Specific styling for the Reservation Form Area (Left) */
+.reservation-form-area {
+    /* Apply base box styles but allow it to size flexibly within the reservation-container */
+    background-color: rgba(10, 25, 40, 0.5);  
+    padding: 35px 50px;
+    border-radius: 5px;
+    border: 2px solid #00E0FF;  
+    box-shadow: 0 0 25px rgba(0, 224, 255, 0.8); 
+    text-align: left;
+    min-width: 400px;
+}
+
+/* Specific styling for the Parking Map Area (Right) */
+.parking-map-area {
+    /* Apply base box styles but allow it to size flexibly within the reservation-container */
+    background-color: rgba(10, 25, 40, 0.7); 
+    border: 2px solid #00E0FF;  
+    box-shadow: 0 0 25px rgba(0, 224, 255, 0.8);
+    padding: 30px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+/* *** END RESERVATION PAGE BOX STYLES *** */
+
+
 /* *** NEW FORM BOX STYLE for Contact Page *** */
 .form-box {
     background-color: rgba(15, 35, 50, 0.6); /* Slightly different background for distinction */
@@ -238,7 +266,10 @@ body {
 .auth-box input[type="email"],
 .auth-box input[type="tel"],
 .form-box input[type="text"],
-.form-box input[type="email"] {
+.form-box input[type="email"],
+.reservation-form-area input[type="text"],
+.reservation-form-area input[type="email"],
+.reservation-form-area input[type="date"] {
     width: calc(100% - 22px);
     padding: 12px;
     margin-bottom: 15px;
@@ -252,7 +283,8 @@ body {
 }
 
 .auth-box input:focus,
-.form-box input:focus {
+.form-box input:focus,
+.reservation-form-area input:focus {
     border-bottom-color: #33FFFF;
     outline: none;
     box-shadow: 0 2px 5px rgba(0, 224, 255, 0.4);  
@@ -260,7 +292,8 @@ body {
 
 /* --- Button Styling (Neon Border/Fill) --- */
 .auth-box button,
-.form-box button {
+.form-box button,
+.reservation-form-area button { /* Include reservation area button */
     width: 100%;
     padding: 14px;
     border: 2px solid #00E0FF;  
@@ -275,7 +308,8 @@ body {
 }
 
 .auth-box button:hover,
-.form-box button:hover {
+.form-box button:hover,
+.reservation-form-area button:hover {
     background-color: #00E0FF;  
     color: #0A1928;  
     box-shadow: 0 0 20px #33FFFF;
@@ -302,7 +336,8 @@ body {
 
 /* Applies to contact form textarea */
 .auth-box textarea,
-.form-box textarea {
+.form-box textarea,
+.reservation-form-area textarea { /* Include reservation area textarea */
     width: calc(100% - 22px);
     height: 100px;  
     padding: 10px;  
