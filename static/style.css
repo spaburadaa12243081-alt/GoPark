@@ -57,12 +57,13 @@ body {
 
 .nav {
     display: flex;
+    align-items: center;
+    gap: 25px;
 }
 
 .nav a {
     color: #B0E0FF;  
     text-decoration: none;
-    margin-left: 30px;
     font-weight: 500;
     font-size: 1.05em;
     transition: color 0.3s, text-shadow 0.3s;
@@ -71,6 +72,19 @@ body {
 .nav a:hover {
     color: #00E0FF;  
     text-shadow: 0 0 5px #00E0FF;  
+}
+
+.nav a.logout {
+    color: #FF4136; 
+    border: 1px solid #FF4136; 
+    padding: 5px 10px; 
+    border-radius: 3px; 
+    text-decoration: none; 
+    transition: background-color 0.3s; 
+}
+
+.nav a.logout:hover {
+    background-color: rgba(255, 65, 54, 0.1); 
 }
 
 /* ------------------------------------------------------------------- */

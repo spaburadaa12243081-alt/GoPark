@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoPark! - Receipt</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<header class="header">
+    <div class="logo-branding">
+        <h1 class="logo-title">GoPark!</h1>
+        <p class="logo-tagline">Smart Parking Made Simple</p>
+    </div>
+    <nav class="nav">
+        <a href="/">Home</a>
+        <a href="/reservation">Reservation</a>
+        <a href="/about">About</a>
+        <a href="/services">Services</a>
+        <a href="/contact">Contact</a>
+        <a href="/" class="logout">Logout</a>
+    </nav>
+</header>
+
+<div class="main-content centered-content">
+
+    <h1 class="title">Payment Receipt</h1>
+    <p class="tagline">Thank you! Your payment has been successfully recorded.</p>
+
+    <div class="auth-box content-box" style="max-width: 750px;">
+
+        <h3>Receipt Information</h3>
+
+        <p><strong>Receipt ID:</strong> {{ receipt.id }}</p>
+        <p><strong>Reservation ID:</strong> {{ receipt.reservation_id }}</p>
+        <p><strong>Payment Method:</strong> {{ receipt.payment_method }}</p>
+        <p><strong>Status:</strong> {{ receipt.status }}</p>
+        <p><strong>Date Paid:</strong> {{ receipt.created_at }}</p>
+
+        <br>
+        <h3>Customer Information</h3>
+
+        <p><strong>Name:</strong> {{ receipt.full_name }}</p>
+        <p><strong>Email:</strong> {{ receipt.email }}</p>
+        <p><strong>Phone:</strong> {{ receipt.phone_number }}</p>
+
+        <br>
+        <h3>Reservation Details</h3>
+
+        <p><strong>Vehicle Type:</strong> {{ receipt.vehicle_type }}</p>
+        <p><strong>Plate Number:</strong> {{ receipt.plate_number }}</p>
+        <p><strong>Date:</strong> {{ receipt.reservation_date }}</p>
+        <p><strong>Arrival:</strong> {{ receipt.arrival_time }}</p>
+        <p><strong>Departure:</strong> {{ receipt.departure_time }}</p>
+        <p><strong>Slot:</strong> {{ receipt.parking_slot }}</p>
+        <p><strong>Total Duration:</strong> {{ receipt.total_minutes }} minutes</p>
+
+        <h2 style="color:#00E0FF; margin-top:20px;">
+            Total Paid: ₱{{ receipt.amount }}
+        </h2>
+
+        <br><br>
+
+        <!-- --- New Download PDF Button --- -->
+        <a href="{{ url_for('receipt_pdf', payment_id=receipt.id) }}" class="button-link" target="_blank">
+            <button>Download PDF</button>
+        </a>
+        <br><br>
+
+        <a href="/" class="button-link">
+            <button>Return Home</button>
+        </a>
+
+    </div>
+</div>
+
+</body>
+</html>

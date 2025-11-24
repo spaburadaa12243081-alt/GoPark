@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoPark! - Payment</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* PAYMENT BUTTON STYLES */
+        .payment-options {
+            display: flex;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .payment-card {
+            flex: 1;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid #ccc;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: bold;
+        }
+
+        .payment-card.selected {
+            border-color: #00E0FF;
+            background-color: #f0faff;
+        }
+
+        .payment-card:hover {
+            border-color: #00E0FF;
+            background-color: #f9fcff;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #00E0FF;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #00b8e6;
+        }
+
+        /* CASH MESSAGE BIGGER */
+        #cashMessage {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* OTP INPUT + BUTTON HALF-HALF */
+        .otp-row {
+            display: flex;
+            width: 100%;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .otp-input {
+            flex: 1; /* Half width */
+            font-size: 16px;
+            padding: 10px;
+        }
+
+        .otp-button {
+            flex: 1; /* Half width */
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="header">
+    <div class="logo-branding">
+        <h1 class="logo-title">GoPark!</h1>
+        <p class="logo-tagline">Smart Parking Made Simple</p>
+    </div>
+    <nav class="nav">
+        <a href="/" class="logout">Logout</a>
+    </nav>
+</header>
+
+<div class="main-content centered-content">
+    <h1 class="title">Payment Overview</h1>
+    <p class="tagline">Review your reservation details before completing payment.</p>
+
+    <div class="auth-box content-box" style="max-width:700px;">
+        <h3>Reservation Details</h3>
+
+        <p><strong>Name:</strong> {{ reservation.full_name }}</p>
+        <p><strong>Email:</strong> {{ reservation.email }}</p>
+        <p><strong>Phone:</strong> {{ reservation.phone_number }}</p>
+        
+        <p><strong>Vehicle Type:</strong> {{ reservation.vehicle_type }}</p>
+        <p><strong>Plate Number:</strong> {{ reservation.plate_number }}</p>
+
+        <p><strong>Date:</strong> {{ reservation.reservation_date }}</p>
+        <p><strong>Arrival Time:</strong> {{ reservation.arrival_time }}</p>
+        <p><strong>Departure Time:</strong> {{ reservation.departure_time }}</p>
+
+        <p><strong>Chosen Slot:</strong> {{ reservation.parking_slot }}</p>
+        <p><strong>Total Minutes:</strong> {{ reservation.total_minutes }} mins</p>
+
+        <h2 style="color:#00E0FF; margin-top:25px;">
+            Total Cost: ₱{{ total_cost }}
+        </h2>
+
+        <br>
+
+        <h3>Select Payment Method</h3>
+
+        <form action="/confirm-payment" method="POST" id="paymentForm">
+            <input type="hidden" name="reservation_id" value="{{ reservation.id }}">
+            <input type="hidden" name="total_cost" value="{{ total_cost }}">
+            <input type="hidden" name="payment_method" id="paymentMethodInput" value="">
+
+            <div class="payment-options">
+                <div class="payment-card" id="cashCard" data-method="cash">Cash</div>
+                <div class="payment-card" id="gcashCard" data-method="gcash">GCash</div>
+            </div>
+
+            <div id="cashMessage" style="display:none; margin-top:15px; color:#00E0FF;">
+                You selected <strong>Cash</strong>. Please pay at the counter.
+            </div>
+
+            <div id="gcashForm" style="display:none; margin-top:15px;">
+                <label><strong>GCash Name:</strong></label>
+                <input type="text" name="gcash_name" id="gcashName" placeholder="Enter GCash Name">
+
+                <label><strong>GCash Number:</strong></label>
+                <input type="text" name="gcash_number" id="gcashNumber" placeholder="Enter GCash Number">
+
+                <label><strong>Amount (₱):</strong></label>
+                <input type="text" value="{{ total_cost }}" readonly>
+            </div>
+
+            <br>
+
+            <!-- OTP INPUT + BUTTON HALF WIDTH -->
+            <div class="otp-row">
+                <input type="text" id="otpInput" class="otp-input" placeholder="Enter OTP">
+                <button type="button" id="otpButton" class="otp-button">Send OTP</button>
+            </div>
+
+            <br>
+            <button type="submit">Proceed to Payment</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    const cashCard = document.getElementById("cashCard");
+    const gcashCard = document.getElementById("gcashCard");
+    const cashMsg = document.getElementById("cashMessage");
+    const gcashForm = document.getElementById("gcashForm");
+    const paymentInput = document.getElementById("paymentMethodInput");
+    const paymentForm = document.getElementById("paymentForm");
+    const gcashName = document.getElementById("gcashName");
+    const gcashNumber = document.getElementById("gcashNumber");
+    const otpButton = document.getElementById("otpButton");
+    const otpInput = document.getElementById("otpInput");
+
+    function selectPayment(method) {
+        paymentInput.value = method;
+
+        if (method === "cash") {
+            cashMsg.style.display = "block";
+            gcashForm.style.display = "none";
+            cashCard.classList.add("selected");
+            gcashCard.classList.remove("selected");
+        } else if (method === "gcash") {
+            gcashForm.style.display = "block";
+            cashMsg.style.display = "none";
+            gcashCard.classList.add("selected");
+            cashCard.classList.remove("selected");
+        }
+    }
+
+    cashCard.addEventListener("click", () => selectPayment("cash"));
+    gcashCard.addEventListener("click", () => selectPayment("gcash"));
+
+    paymentForm.addEventListener("submit", function(event) {
+        if (paymentInput.value === "gcash") {
+            if (!gcashName.value.trim() || !gcashNumber.value.trim()) {
+                alert("Please fill in both GCash Name and Number before proceeding.");
+                event.preventDefault();
+            }
+        }
+
+        if (!otpInput.value.trim()) {
+            alert("Please enter the OTP before proceeding.");
+            event.preventDefault();
+        }
+    });
+
+    otpButton.addEventListener("click", function() {
+        alert("OTP has been sent to your phone.");
+    });
+</script>
+
+</body>
+</html>
