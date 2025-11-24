@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoPark! - Summary</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<header class="header">
+    <div class="logo-branding">
+        <h1 class="logo-title">GoPark!</h1>
+        <p class="logo-tagline">Smart Parking Made Simple</p>
+    </div>
+    <nav class="nav">
+        <a href="/logout" class="logout">Logout</a>
+    </nav>
+</header>
+
+<div class="main-content centered-content">
+    <h1 class="title">Reservation Summary</h1>
+    <p class="tagline">Here are the complete details of your reservation and payment.</p>
+
+    <div class="auth-box content-box" style="max-width:700px;">
+
+        <!-- RESERVATION DETAILS -->
+        <h3>Reservation Details</h3>
+
+        <p><strong>Name:</strong> {{ reservation.full_name }}</p>
+        <p><strong>Email:</strong> {{ reservation.email }}</p>
+        <p><strong>Phone Number:</strong> {{ reservation.phone_number }}</p>
+
+        <p><strong>Vehicle Type:</strong> {{ reservation.vehicle_type }}</p>
+        <p><strong>Plate Number:</strong> {{ reservation.plate_number }}</p>
+
+        <p><strong>Date Reserved:</strong> {{ reservation.reservation_date }}</p>
+        <p><strong>Arrival Time:</strong> {{ reservation.arrival_time }}</p>
+        <p><strong>Departure Time:</strong> {{ reservation.departure_time }}</p>
+
+        <p><strong>Parking Slot:</strong> {{ reservation.parking_slot }}</p>
+        <p><strong>Total Minutes:</strong> {{ reservation.total_minutes }} mins</p>
+
+        <br>
+
+        <!-- PAYMENT DETAILS -->
+        <h3>Payment Details</h3>
+
+        <p><strong>Payment Method:</strong> {{ reservation.payment_method|capitalize }}</p>
+
+        {% if reservation.payment_method == 'gcash' %}
+            <p><strong>GCash Name:</strong> {{ reservation.gcash_name }}</p>
+            <p><strong>GCash Number:</strong> {{ reservation.gcash_number }}</p>
+        {% endif %}
+
+        <h2 style="color:#00E0FF; margin-top:20px;">Total Paid: ₱{{ total_cost }}</h2>
+        <p style="color:green; font-weight:bold; margin-top:5px;">Status: PAID</p>
+
+        <br><br>
+
+        <!-- PROFESSIONAL REMINDER MESSAGE (IMPROVED VISIBILITY) -->
+        <div style="
+            background:#FFF7D6;
+            border-left:6px solid #FFC107;
+            padding:18px;
+            border-radius:8px;
+            margin-bottom:25px;
+        ">
+            <p style="font-size:16px; line-height:1.7; font-weight:600; color:#444;">
+                ⚠️ <strong>Important Reminder:</strong><br>
+                Please take a clear screenshot of this reservation summary.  
+                You will be required to present this as proof of your booking and payment  
+                upon arrival at the parking area.
+            </p>
+        </div>
+
+        <!-- LOGOUT BUTTON -->
+        <a href="/logout" style="
+            background-color:#00E0FF;
+            color:white;
+            padding:12px 20px;
+            text-align:center;
+            display:block;
+            width:100%;
+            border-radius:8px;
+            font-size:16px;
+            font-weight:bold;
+            text-decoration:none;
+        ">Logout</a>
+
+    </div>
+</div>
+
+</body>
+</html>
