@@ -436,6 +436,230 @@
             text-align: center;
             padding: 20px;
         }
+
+        /* New styles for section-specific add field forms */
+        .section-add-field-form {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .section-add-field-form input {
+            flex: 1;
+            min-width: 150px;
+            padding: 10px;
+            border: none;
+            border-bottom: 2px solid #00E0FF;
+            background-color: transparent;
+            color: white;
+        }
+
+        .section-add-field-form button {
+            width: auto;
+            padding: 10px 20px;
+        }
+
+        /* Custom Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: rgba(10, 25, 40, 0.95);
+            border: 2px solid #00E0FF;
+            border-radius: 5px;
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 0 25px rgba(0, 224, 255, 0.8);
+            color: #FFFFFF;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px dashed #33FFFF;
+            padding-bottom: 10px;
+        }
+
+        .modal-title {
+            color: #00E0FF;
+            font-size: 1.3em;
+            margin: 0;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: #B0E0FF;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: #00E0FF;
+        }
+
+        .modal-body {
+            margin-bottom: 20px;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: none;
+            border-bottom: 2px solid #00E0FF;
+            background-color: transparent;
+            color: white;
+            border-radius: 0;
+        }
+
+        .modal-input:focus {
+            border-bottom-color: #33FFFF;
+            outline: none;
+            box-shadow: 0 2px 5px rgba(0, 224, 255, 0.4);
+        }
+
+        .modal-textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #00E0FF;
+            background-color: transparent;
+            color: white;
+            border-radius: 3px;
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .modal-textarea:focus {
+            border-color: #33FFFF;
+            outline: none;
+            box-shadow: 0 0 10px rgba(0, 224, 255, 0.4);
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .modal-btn {
+            padding: 10px 20px;
+            border: 2px solid #00E0FF;
+            border-radius: 3px;
+            background-color: rgba(0, 224, 255, 0.1);
+            color: #00E0FF;
+            cursor: pointer;
+            transition: background-color 0.2s, box-shadow 0.2s, color 0.2s;
+        }
+
+        .modal-btn:hover {
+            background-color: #00E0FF;
+            color: #0A1928;
+            box-shadow: 0 0 15px #33FFFF;
+        }
+
+        .modal-btn.cancel {
+            border-color: #FF4136;
+            background-color: rgba(255, 65, 54, 0.1);
+            color: #FF4136;
+        }
+
+        .modal-btn.cancel:hover {
+            background-color: #FF4136;
+            color: #FFFFFF;
+        }
+
+        /* Duration List Styles */
+        .duration-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .duration-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border: 1px solid rgba(0, 224, 255, 0.3);
+            border-radius: 5px;
+            background-color: rgba(10, 25, 40, 0.3);
+        }
+
+        .duration-text {
+            color: #B0E0FF;
+            font-weight: 500;
+        }
+
+        .duration-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .duration-action-btn {
+            padding: 6px 12px;
+            border: 1px solid #00E0FF;
+            background-color: transparent;
+            color: #00E0FF;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 0.8em;
+        }
+
+        .duration-action-btn:hover {
+            background-color: rgba(0, 224, 255, 0.2);
+        }
+
+        .add-duration-form {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .add-duration-input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-bottom: 2px solid #00E0FF;
+            background-color: transparent;
+            color: white;
+        }
+
+        .add-duration-btn {
+            padding: 10px 20px;
+            border: 2px solid #00E0FF;
+            border-radius: 3px;
+            background-color: rgba(0, 224, 255, 0.1);
+            color: #00E0FF;
+            cursor: pointer;
+            transition: background-color 0.2s, box-shadow 0.2s, color 0.2s;
+        }
+
+        .add-duration-btn:hover {
+            background-color: #00E0FF;
+            color: #0A1928;
+            box-shadow: 0 0 15px #33FFFF;
+        }
     </style>
 </head>
 <body>
@@ -481,6 +705,11 @@
                 <ul class="field-list" id="personal-fields">
                     <li class="empty-message">No custom fields added yet</li>
                 </ul>
+                <form class="section-add-field-form" data-section="personal_info">
+                    <input type="text" name="label" placeholder="Field Label" required>
+                    <input type="text" name="field_type" placeholder="Field Type" required>
+                    <button type="submit">Add Field</button>
+                </form>
             </div>
 
             <div class="form-section">
@@ -488,6 +717,11 @@
                 <ul class="field-list" id="vehicle-fields">
                     <li class="empty-message">No custom fields added yet</li>
                 </ul>
+                <form class="section-add-field-form" data-section="vehicle_info">
+                    <input type="text" name="label" placeholder="Field Label" required>
+                    <input type="text" name="field_type" placeholder="Field Type" required>
+                    <button type="submit">Add Field</button>
+                </form>
             </div>
 
             <div class="form-section">
@@ -495,6 +729,11 @@
                 <ul class="field-list" id="reservation-fields">
                     <li class="empty-message">No custom fields added yet</li>
                 </ul>
+                <form class="section-add-field-form" data-section="reservation_info">
+                    <input type="text" name="label" placeholder="Field Label" required>
+                    <input type="text" name="field_type" placeholder="Field Type" required>
+                    <button type="submit">Add Field</button>
+                </form>
             </div>
 
             <div class="form-section">
@@ -502,12 +741,108 @@
                 <ul class="field-list" id="additional-fields">
                     <li class="empty-message">No custom fields added yet</li>
                 </ul>
+                <form class="section-add-field-form" data-section="additional_info">
+                    <input type="text" name="label" placeholder="Field Label" required>
+                    <input type="text" name="field_type" placeholder="Field Type" required>
+                    <button type="submit">Add Field</button>
+                </form>
             </div>
 
             <div class="preview-note">
                 <strong>Note:</strong> Changes made here will be reflected in the user reservation form. 
                 Enabled fields will appear in the reservation form for users to fill out. 
                 Disabled fields will be hidden from users but remain in the system for future use.
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Modal for Messages -->
+    <div class="modal-overlay" id="messageModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="messageModalTitle">Message</h3>
+                <button class="modal-close" id="messageModalClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="messageModalText"></p>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn" id="messageModalOk">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Modal for Edit Field -->
+    <div class="modal-overlay" id="editFieldModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Edit Field Label</h3>
+                <button class="modal-close" id="editFieldModalClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="text" class="modal-input" id="editFieldInput" placeholder="Enter new field label">
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn cancel" id="editFieldCancel">Cancel</button>
+                <button class="modal-btn" id="editFieldSave">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Modal for Edit Parking Duration -->
+    <div class="modal-overlay" id="editDurationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Edit Parking Duration Options</h3>
+                <button class="modal-close" id="editDurationModalClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: 15px; color: #B0E0FF;">Manage parking duration options that users will see:</p>
+                <ul class="duration-list" id="durationList">
+                    <!-- Duration items will be dynamically added here -->
+                </ul>
+                <div class="add-duration-form">
+                    <input type="text" class="add-duration-input" id="newDurationInput" placeholder="Enter new duration (e.g., 10 hours)">
+                    <button type="button" class="add-duration-btn" id="addDurationBtn">Add Duration</button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn cancel" id="editDurationCancel">Cancel</button>
+                <button class="modal-btn" id="editDurationSave">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Modal for Edit Single Duration -->
+    <div class="modal-overlay" id="editSingleDurationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Edit Duration</h3>
+                <button class="modal-close" id="editSingleDurationModalClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="text" class="modal-input" id="editSingleDurationInput" placeholder="Enter duration (e.g., 10 hours)">
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn cancel" id="editSingleDurationCancel">Cancel</button>
+                <button class="modal-btn" id="editSingleDurationSave">Update</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Modal for Confirmation -->
+    <div class="modal-overlay" id="confirmModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Confirm Action</h3>
+                <button class="modal-close" id="confirmModalClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="confirmModalText"></p>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn cancel" id="confirmModalCancel">Cancel</button>
+                <button class="modal-btn" id="confirmModalOk">OK</button>
             </div>
         </div>
     </div>
@@ -524,12 +859,18 @@
             { id: 6, label: "Reservation Date", field_type: "date", section: "reservation_info", is_active: true },
             { id: 7, label: "Arrival Time", field_type: "time", section: "reservation_info", is_active: true },
             { id: 8, label: "Departure Time", field_type: "time", section: "reservation_info", is_active: true },
-            { id: 9, label: "Parking Duration", field_type: "text", section: "reservation_info", is_active: true },
+            { id: 9, label: "Parking Duration", field_type: "select", section: "reservation_info", is_active: true, 
+              options: ["1 hour", "2 hours", "3 hours", "4 hours", "5 hours", "6 hours", "7 hours", "8 hours", "9 hours", "10 hours", "11 hours", "12 hours", "13 hours", "14 hours", "15 hours", "16 hours", "17 hours", "18 hours", "19 hours", "20 hours", "21 hours", "22 hours", "23 hours", "24 hours"] },
             { id: 10, label: "Parking Spot", field_type: "text", section: "reservation_info", is_active: true }
         ];
 
         // Next ID for new fields
         let nextId = 11;
+
+        // Current field being edited
+        let currentFieldId = null;
+        let currentDurationIndex = null;
+        let currentDurations = [];
 
         // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
@@ -554,7 +895,7 @@
             // Render form fields
             renderFormFields();
 
-            // Handle form submission for adding new field
+            // Handle form submission for adding new field (main form)
             document.getElementById('addFieldForm').addEventListener('submit', function(e) {
                 e.preventDefault();
                 
@@ -569,7 +910,206 @@
                 // Reset form
                 this.reset();
             });
+
+            // Handle form submission for section-specific add field forms
+            document.querySelectorAll('.section-add-field-form').forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const formData = new FormData(this);
+                    const label = formData.get('label');
+                    const field_type = formData.get('field_type');
+                    const section = this.getAttribute('data-section');
+                    
+                    // Add new field
+                    addNewField(label, field_type, section);
+                    
+                    // Reset form
+                    this.reset();
+                });
+            });
+
+            // Modal event listeners
+            initializeModals();
         });
+
+        // Function to initialize modal functionality
+        function initializeModals() {
+            // Message Modal
+            document.getElementById('messageModalClose').addEventListener('click', closeMessageModal);
+            document.getElementById('messageModalOk').addEventListener('click', closeMessageModal);
+
+            // Edit Field Modal
+            document.getElementById('editFieldModalClose').addEventListener('click', closeEditFieldModal);
+            document.getElementById('editFieldCancel').addEventListener('click', closeEditFieldModal);
+            document.getElementById('editFieldSave').addEventListener('click', saveFieldEdit);
+
+            // Edit Duration Modal
+            document.getElementById('editDurationModalClose').addEventListener('click', closeEditDurationModal);
+            document.getElementById('editDurationCancel').addEventListener('click', closeEditDurationModal);
+            document.getElementById('editDurationSave').addEventListener('click', saveAllDurations);
+            document.getElementById('addDurationBtn').addEventListener('click', addNewDuration);
+
+            // Edit Single Duration Modal
+            document.getElementById('editSingleDurationModalClose').addEventListener('click', closeEditSingleDurationModal);
+            document.getElementById('editSingleDurationCancel').addEventListener('click', closeEditSingleDurationModal);
+            document.getElementById('editSingleDurationSave').addEventListener('click', saveSingleDuration);
+
+            // Confirm Modal
+            document.getElementById('confirmModalClose').addEventListener('click', closeConfirmModal);
+            document.getElementById('confirmModalCancel').addEventListener('click', closeConfirmModal);
+            document.getElementById('confirmModalOk').addEventListener('click', confirmAction);
+        }
+
+        // Modal functions
+        function showMessageModal(title, message) {
+            document.getElementById('messageModalTitle').textContent = title;
+            document.getElementById('messageModalText').textContent = message;
+            document.getElementById('messageModal').style.display = 'flex';
+        }
+
+        function closeMessageModal() {
+            document.getElementById('messageModal').style.display = 'none';
+        }
+
+        function showEditFieldModal(fieldId, currentLabel) {
+            currentFieldId = fieldId;
+            document.getElementById('editFieldInput').value = currentLabel;
+            document.getElementById('editFieldModal').style.display = 'flex';
+            document.getElementById('editFieldInput').focus();
+        }
+
+        function closeEditFieldModal() {
+            document.getElementById('editFieldModal').style.display = 'none';
+            currentFieldId = null;
+        }
+
+        function showEditDurationModal(fieldId, currentOptions) {
+            currentFieldId = fieldId;
+            currentDurations = [...currentOptions];
+            renderDurationList();
+            document.getElementById('editDurationModal').style.display = 'flex';
+            document.getElementById('newDurationInput').focus();
+        }
+
+        function closeEditDurationModal() {
+            document.getElementById('editDurationModal').style.display = 'none';
+            currentFieldId = null;
+            currentDurations = [];
+        }
+
+        function showEditSingleDurationModal(durationIndex, currentValue) {
+            currentDurationIndex = durationIndex;
+            document.getElementById('editSingleDurationInput').value = currentValue;
+            document.getElementById('editSingleDurationModal').style.display = 'flex';
+            document.getElementById('editSingleDurationInput').focus();
+        }
+
+        function closeEditSingleDurationModal() {
+            document.getElementById('editSingleDurationModal').style.display = 'none';
+            currentDurationIndex = null;
+        }
+
+        function showConfirmModal(message, callback) {
+            document.getElementById('confirmModalText').textContent = message;
+            document.getElementById('confirmModal').style.display = 'flex';
+            window.confirmCallback = callback;
+        }
+
+        function closeConfirmModal() {
+            document.getElementById('confirmModal').style.display = 'none';
+            window.confirmCallback = null;
+        }
+
+        function confirmAction() {
+            if (window.confirmCallback) {
+                window.confirmCallback();
+            }
+            closeConfirmModal();
+        }
+
+        // Duration management functions
+        function renderDurationList() {
+            const durationList = document.getElementById('durationList');
+            durationList.innerHTML = '';
+
+            if (currentDurations.length === 0) {
+                durationList.innerHTML = '<li class="empty-message" style="text-align: center; padding: 20px;">No duration options added yet</li>';
+                return;
+            }
+
+            currentDurations.forEach((duration, index) => {
+                const durationItem = document.createElement('li');
+                durationItem.className = 'duration-item';
+                durationItem.innerHTML = `
+                    <span class="duration-text">${duration}</span>
+                    <div class="duration-actions">
+                        <button class="duration-action-btn edit-duration" data-index="${index}">Edit</button>
+                        <button class="duration-action-btn delete-duration" data-index="${index}">Delete</button>
+                    </div>
+                `;
+                durationList.appendChild(durationItem);
+            });
+
+            // Add event listeners to duration action buttons
+            document.querySelectorAll('.edit-duration').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    editSingleDuration(index);
+                });
+            });
+
+            document.querySelectorAll('.delete-duration').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    deleteSingleDuration(index);
+                });
+            });
+        }
+
+        function addNewDuration() {
+            const newDurationInput = document.getElementById('newDurationInput');
+            const newDuration = newDurationInput.value.trim();
+            
+            if (newDuration !== '') {
+                currentDurations.push(newDuration);
+                renderDurationList();
+                newDurationInput.value = '';
+                newDurationInput.focus();
+            }
+        }
+
+        function editSingleDuration(index) {
+            showEditSingleDurationModal(index, currentDurations[index]);
+        }
+
+        function saveSingleDuration() {
+            if (currentDurationIndex !== null) {
+                const newValue = document.getElementById('editSingleDurationInput').value.trim();
+                if (newValue !== '') {
+                    currentDurations[currentDurationIndex] = newValue;
+                    renderDurationList();
+                    closeEditSingleDurationModal();
+                }
+            }
+        }
+
+        function deleteSingleDuration(index) {
+            showConfirmModal(`Are you sure you want to delete "${currentDurations[index]}"?`, function() {
+                currentDurations.splice(index, 1);
+                renderDurationList();
+            });
+        }
+
+        function saveAllDurations() {
+            const field = formFields.find(f => f.id === currentFieldId);
+            if (!field) return;
+            
+            field.options = [...currentDurations];
+            renderFormFields();
+            closeEditDurationModal();
+            showMessageModal('Success', `Parking duration options updated! Users will see ${currentDurations.length} options.`);
+        }
 
         // Function to render form fields
         function renderFormFields() {
@@ -606,21 +1146,42 @@
             fields.forEach(field => {
                 const fieldItem = document.createElement('li');
                 fieldItem.className = 'field-item';
-                fieldItem.innerHTML = `
-                    <div class="field-info">
-                        <span class="status-indicator ${field.is_active ? 'status-active' : 'status-inactive'}"></span>
-                        <span class="field-label">${field.label}</span>
-                        <span class="field-type">${field.field_type}</span>
-                        <span class="field-section">${getSectionDisplayName(field.section)}</span>
-                    </div>
-                    <div class="field-actions">
-                        <button class="action-btn edit-btn" data-id="${field.id}">Edit</button>
-                        <button class="action-btn toggle-btn ${field.is_active ? '' : 'inactive'}" data-id="${field.id}">
-                            ${field.is_active ? 'Disable' : 'Enable'}
-                        </button>
-                        <button class="action-btn delete-btn" data-id="${field.id}">Delete</button>
-                    </div>
-                `;
+                
+                // Special handling for Parking Duration field
+                if (field.label === "Parking Duration") {
+                    fieldItem.innerHTML = `
+                        <div class="field-info">
+                            <span class="status-indicator ${field.is_active ? 'status-active' : 'status-inactive'}"></span>
+                            <span class="field-label">${field.label}</span>
+                            <span class="field-type">${field.field_type}</span>
+                            <span class="field-section">${getSectionDisplayName(field.section)}</span>
+                            <span style="color: #FFA500; font-size: 0.9em;">(${field.options.length} options)</span>
+                        </div>
+                        <div class="field-actions">
+                            <button class="action-btn edit-duration-btn" data-id="${field.id}">Edit Duration</button>
+                            <button class="action-btn toggle-btn ${field.is_active ? '' : 'inactive'}" data-id="${field.id}">
+                                ${field.is_active ? 'Disable' : 'Enable'}
+                            </button>
+                            <button class="action-btn delete-btn" data-id="${field.id}">Delete</button>
+                        </div>
+                    `;
+                } else {
+                    fieldItem.innerHTML = `
+                        <div class="field-info">
+                            <span class="status-indicator ${field.is_active ? 'status-active' : 'status-inactive'}"></span>
+                            <span class="field-label">${field.label}</span>
+                            <span class="field-type">${field.field_type}</span>
+                            <span class="field-section">${getSectionDisplayName(field.section)}</span>
+                        </div>
+                        <div class="field-actions">
+                            <button class="action-btn edit-btn" data-id="${field.id}">Edit</button>
+                            <button class="action-btn toggle-btn ${field.is_active ? '' : 'inactive'}" data-id="${field.id}">
+                                ${field.is_active ? 'Disable' : 'Enable'}
+                            </button>
+                            <button class="action-btn delete-btn" data-id="${field.id}">Delete</button>
+                        </div>
+                    `;
+                }
                 sectionElement.appendChild(fieldItem);
             });
             
@@ -629,6 +1190,16 @@
                 btn.addEventListener('click', function() {
                     const fieldId = parseInt(this.getAttribute('data-id'));
                     editField(fieldId);
+                });
+            });
+            
+            document.querySelectorAll('.edit-duration-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const fieldId = parseInt(this.getAttribute('data-id'));
+                    const field = formFields.find(f => f.id === fieldId);
+                    if (field) {
+                        editParkingDuration(fieldId, field.options);
+                    }
                 });
             });
             
@@ -672,7 +1243,7 @@
             renderFormFields();
             
             // Show success message
-            alert(`Field "${label}" added successfully!`);
+            showMessageModal('Success', `Field "${label}" added successfully!`);
         }
 
         // Function to edit a field
@@ -680,12 +1251,25 @@
             const field = formFields.find(f => f.id === fieldId);
             if (!field) return;
             
-            const newLabel = prompt('Enter new label for this field:', field.label);
-            if (newLabel && newLabel.trim() !== '') {
-                field.label = newLabel.trim();
+            showEditFieldModal(fieldId, field.label);
+        }
+
+        function saveFieldEdit() {
+            const field = formFields.find(f => f.id === currentFieldId);
+            if (!field) return;
+            
+            const newLabel = document.getElementById('editFieldInput').value.trim();
+            if (newLabel !== '') {
+                field.label = newLabel;
                 renderFormFields();
-                alert('Field updated successfully!');
+                closeEditFieldModal();
+                showMessageModal('Success', 'Field updated successfully!');
             }
+        }
+
+        // Function to edit parking duration options
+        function editParkingDuration(fieldId, currentOptions) {
+            showEditDurationModal(fieldId, currentOptions);
         }
 
         // Function to toggle field status
@@ -697,7 +1281,7 @@
             renderFormFields();
             
             const status = field.is_active ? 'enabled' : 'disabled';
-            alert(`Field "${field.label}" has been ${status}`);
+            showMessageModal('Field Status', `Field "${field.label}" has been ${status}`);
         }
 
         // Function to delete a field
@@ -705,11 +1289,11 @@
             const field = formFields.find(f => f.id === fieldId);
             if (!field) return;
             
-            if (confirm(`Are you sure you want to delete the field "${field.label}"?`)) {
+            showConfirmModal(`Are you sure you want to delete the field "${field.label}"?`, function() {
                 formFields = formFields.filter(f => f.id !== fieldId);
                 renderFormFields();
-                alert(`Field "${field.label}" has been deleted`);
-            }
+                showMessageModal('Success', `Field "${field.label}" has been deleted`);
+            });
         }
     </script>
 </body>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GoPark! - Admin Dashboard</title>
+    <title>GoPark! - Pending Payments</title>
     <style>
         /* --- Global High-Tech Theme --- */
         body {
@@ -176,8 +176,8 @@
             padding: 40px 60px;
         }
 
-        /* *** ADMIN DASHBOARD BOX STYLES *** */
-        .admin-dashboard-area {
+        /* *** PENDING PAYMENTS BOX STYLES *** */
+        .pending-payments-area {
             background-color: rgba(10, 25, 40, 0.5);  
             padding: 35px 50px;
             border-radius: 5px;
@@ -202,9 +202,9 @@
         .auth-box input[type="password"],
         .auth-box input[type="email"],
         .auth-box input[type="tel"],
-        .admin-dashboard-area input[type="text"],
-        .admin-dashboard-area input[type="email"],
-        .admin-dashboard-area input[type="date"] {
+        .pending-payments-area input[type="text"],
+        .pending-payments-area input[type="email"],
+        .pending-payments-area input[type="date"] {
             width: calc(100% - 22px);
             padding: 12px;
             margin-bottom: 15px;
@@ -218,7 +218,7 @@
         }
 
         .auth-box input:focus,
-        .admin-dashboard-area input:focus {
+        .pending-payments-area input:focus {
             border-bottom-color: #33FFFF;
             outline: none;
             box-shadow: 0 2px 5px rgba(0, 224, 255, 0.4);  
@@ -226,8 +226,7 @@
 
         /* --- Buttons --- */
         .auth-box button,
-        .admin-dashboard-area button {
-            width: 100%;
+        .pending-payments-area button {
             padding: 14px;
             border: 2px solid #00E0FF;  
             border-radius: 3px;
@@ -241,13 +240,13 @@
         }
 
         .auth-box button:hover,
-        .admin-dashboard-area button:hover {
+        .pending-payments-area button:hover {
             background-color: #00E0FF;  
             color: #0A1928;  
             box-shadow: 0 0 20px #33FFFF;
         }
 
-        /* Admin Dashboard Specific Styles */
+        /* Pending Payments Specific Styles */
         .dashboard-header {
             display: flex;
             justify-content: space-between;
@@ -294,35 +293,37 @@
             font-size: 1.1em;
         }
 
-        .reservations-table {
+        .payments-table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
 
-        .reservations-table th,
-        .reservations-table td {
+        .payments-table th,
+        .payments-table td {
             padding: 12px;
             text-align: left;
             border-bottom: 1px solid rgba(0, 224, 255, 0.3);
         }
 
-        .reservations-table th {
+        .payments-table th {
             color: #00E0FF;
             font-weight: 600;
             background-color: rgba(0, 224, 255, 0.1);
         }
 
-        .reservations-table td {
+        .payments-table td {
             color: #FFFFFF;
         }
 
-        .status-pending {
+        .payment-status {
             color: #FFC107;
+            font-weight: bold;
         }
 
-        .status-paid {
-            color: #28A745;
+        .payment-method {
+            color: #FFA500;
+            font-weight: bold;
         }
 
         .action-buttons {
@@ -331,17 +332,35 @@
         }
 
         .action-btn {
-            padding: 5px 10px;
+            padding: 8px 15px;
             border: 1px solid #00E0FF;
             background-color: transparent;
             color: #00E0FF;
             border-radius: 3px;
             cursor: pointer;
             transition: background-color 0.3s;
+            font-size: 0.9em;
         }
 
         .action-btn:hover {
             background-color: rgba(0, 224, 255, 0.2);
+        }
+
+        .action-btn.mark-paid {
+            border-color: #28A745;
+            color: #28A745;
+        }
+
+        .action-btn.mark-paid:hover {
+            background-color: rgba(40, 167, 69, 0.2);
+        }
+
+        .empty-message {
+            color: #90A4AE;
+            font-style: italic;
+            text-align: center;
+            padding: 40px;
+            font-size: 1.1em;
         }
     </style>
 </head>
@@ -352,7 +371,7 @@
             <p class="logo-tagline">No Stress. Just Park.</p>
         </div>
         <nav class="nav">
-            <a href="/admin/custom-form">Customize Form</a>
+            <a href="admin_dashboard.html">Admin Dashboard</a>
             <div class="dropdown">
                 <button class="dropbtn">Total Reservations <span style="font-size: 0.8em;">▼</span></button>
                 <div class="dropdown-content">
@@ -365,88 +384,207 @@
     </header>
 
     <div class="main-content centered-content">
-        <div class="admin-dashboard-area auth-box content-box">
+        <div class="pending-payments-area auth-box content-box">
             <div class="dashboard-header">
-                <h1 class="dashboard-title">Admin Dashboard</h1>
-                <div class="admin-info">Welcome, Admin!</div>
+                <h1 class="dashboard-title">Pending Payments</h1>
+                <div class="admin-info">Cash Payments Waiting for Collection</div>
             </div>
 
             <!-- Metrics Overview -->
             <div class="metrics-grid">
                 <div class="metric-card">
-                    <div class="metric-value">0</div>
-                    <div class="metric-label">Total Reservations</div>
+                    <div class="metric-value" id="totalPending">0</div>
+                    <div class="metric-label">Total Pending Payments</div>
                 </div>
                 <div class="metric-card">
-                    <div class="metric-value">0</div>
-                    <div class="metric-label">Pending Payments</div>
+                    <div class="metric-value" id="totalAmount">₱0</div>
+                    <div class="metric-label">Total Amount Due</div>
                 </div>
                 <div class="metric-card">
-                    <div class="metric-value">0</div>
-                    <div class="metric-label">Completed Payments</div>
+                    <div class="metric-value" id="todayPending">0</div>
+                    <div class="metric-label">Today's Pending</div>
                 </div>
             </div>
 
-            <!-- Reservations Table -->
-            <h3>Recent Reservations</h3>
-            <table class="reservations-table">
+            <!-- Pending Payments Table -->
+            <h3>Cash Payments Pending Collection</h3>
+            <table class="payments-table">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Full Name</th>
+                        <th>Reservation ID</th>
+                        <th>Customer Name</th>
                         <th>Phone</th>
-                        <th>Email</th>
-                        <th>Vehicle Type</th>
+                        <th>Vehicle</th>
                         <th>Plate Number</th>
-                        <th>Date</th>
-                        <th>Arrival</th>
-                        <th>Departure</th>
-                        <th>Slot</th>
-                        <th>Cost</th>
+                        <th>Date & Time</th>
+                        <th>Parking Slot</th>
+                        <th>Amount</th>
+                        <th>Payment Method</th>
                         <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <!-- No reservations yet -->
+                <tbody id="pendingPaymentsBody">
+                    <!-- Pending payments will be dynamically added here -->
                 </tbody>
             </table>
-            <p style="text-align: center; color: #90A4AE; font-style: italic; padding: 20px;">
-                No reservations yet. Reservations will appear here once customers start making bookings.
-            </p>
+            <div id="noPaymentsMessage" class="empty-message">
+                No pending cash payments. Payments will appear here when customers choose cash payment method.
+            </div>
         </div>
     </div>
 
     <script>
-        // Dropdown toggle on click
+        // Sample data for pending payments (cash payments)
+        let pendingPayments = [
+            {
+                id: 101,
+                customerName: "John Reyes",
+                phone: "0917-123-4567",
+                vehicle: "Toyota Vios",
+                plateNumber: "ABC123",
+                date: "2023-10-15",
+                time: "09:00 - 17:00",
+                parkingSlot: "A12",
+                amount: "₱250",
+                paymentMethod: "Cash",
+                status: "Pending"
+            },
+            {
+                id: 102,
+                customerName: "Maria Santos",
+                phone: "0922-987-6543",
+                vehicle: "Honda Civic",
+                plateNumber: "XYZ789",
+                date: "2023-10-16",
+                time: "10:30 - 15:45",
+                parkingSlot: "B05",
+                amount: "₱180",
+                paymentMethod: "Cash",
+                status: "Pending"
+            },
+            {
+                id: 103,
+                customerName: "Carlos Lim",
+                phone: "0933-555-8888",
+                vehicle: "Mitsubishi Montero",
+                plateNumber: "DEF456",
+                date: "2023-10-17",
+                time: "08:00 - 18:30",
+                parkingSlot: "C08",
+                amount: "₱320",
+                paymentMethod: "Cash",
+                status: "Pending"
+            }
+        ];
+
+        // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
+            // Initialize dropdown functionality
             const dropbtn = document.querySelector('.dropbtn');
             const dropdownContent = document.querySelector('.dropdown-content');
 
-            dropbtn.addEventListener('click', function(event) {
-                event.preventDefault(); // Prevent any default behavior
-                dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
-            });
+            if (dropbtn && dropdownContent) {
+                dropbtn.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+                });
 
-            // Close dropdown when clicking outside
-            window.addEventListener('click', function(event) {
-                if (!event.target.matches('.dropbtn') && !event.target.closest('.dropdown')) {
-                    dropdownContent.style.display = 'none';
-                }
-            });
+                // Close dropdown when clicking outside
+                window.addEventListener('click', function(event) {
+                    if (!event.target.matches('.dropbtn') && !event.target.closest('.dropdown')) {
+                        dropdownContent.style.display = 'none';
+                    }
+                });
+            }
+
+            // Render pending payments
+            renderPendingPayments();
         });
 
-        function viewReservation(id) {
-            alert('View reservation ' + id);
+        // Function to render pending payments
+        function renderPendingPayments() {
+            const paymentsBody = document.getElementById('pendingPaymentsBody');
+            const noPaymentsMessage = document.getElementById('noPaymentsMessage');
+            
+            // Update metrics
+            document.getElementById('totalPending').textContent = pendingPayments.length;
+            
+            // Calculate total amount
+            const totalAmount = pendingPayments.reduce((sum, payment) => {
+                return sum + parseInt(payment.amount.replace('₱', ''));
+            }, 0);
+            document.getElementById('totalAmount').textContent = `₱${totalAmount}`;
+            
+            // Calculate today's pending (simplified - count all for demo)
+            document.getElementById('todayPending').textContent = pendingPayments.length;
+
+            if (pendingPayments.length === 0) {
+                paymentsBody.innerHTML = '';
+                noPaymentsMessage.style.display = 'block';
+                return;
+            }
+
+            noPaymentsMessage.style.display = 'none';
+            paymentsBody.innerHTML = '';
+
+            pendingPayments.forEach(payment => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${payment.id}</td>
+                    <td>${payment.customerName}</td>
+                    <td>${payment.phone}</td>
+                    <td>${payment.vehicle}</td>
+                    <td>${payment.plateNumber}</td>
+                    <td>${payment.date}<br>${payment.time}</td>
+                    <td>${payment.parkingSlot}</td>
+                    <td>${payment.amount}</td>
+                    <td class="payment-method">${payment.paymentMethod}</td>
+                    <td class="payment-status">${payment.status}</td>
+                    <td class="action-buttons">
+                        <button class="action-btn mark-paid" onclick="markAsPaid(${payment.id})">Mark as Paid</button>
+                        <button class="action-btn" onclick="viewDetails(${payment.id})">View</button>
+                        <button class="action-btn" onclick="cancelPayment(${payment.id})">Cancel</button>
+                    </td>
+                `;
+                paymentsBody.appendChild(row);
+            });
         }
 
-        function editReservation(id) {
-            alert('Edit reservation ' + id);
+        // Function to mark payment as paid
+        function markAsPaid(paymentId) {
+            if (confirm('Mark this cash payment as collected and completed?')) {
+                // Remove from pending payments (in real app, this would update status in database)
+                pendingPayments = pendingPayments.filter(payment => payment.id !== paymentId);
+                renderPendingPayments();
+                alert('Payment marked as completed!');
+            }
         }
 
-        function deleteReservation(id) {
-            if (confirm('Are you sure you want to delete reservation ' + id + '?')) {
-                alert('Delete reservation ' + id);
+        // Function to view payment details
+        function viewDetails(paymentId) {
+            const payment = pendingPayments.find(p => p.id === paymentId);
+            if (payment) {
+                alert(`Payment Details:\n
+Reservation ID: ${payment.id}
+Customer: ${payment.customerName}
+Phone: ${payment.phone}
+Vehicle: ${payment.vehicle} (${payment.plateNumber})
+Date: ${payment.date}
+Time: ${payment.time}
+Parking Slot: ${payment.parkingSlot}
+Amount: ${payment.amount}
+Payment Method: ${payment.paymentMethod}
+Status: ${payment.status}`);
+            }
+        }
+
+        // Function to cancel payment
+        function cancelPayment(paymentId) {
+            if (confirm('Are you sure you want to cancel this payment? This will remove it from pending payments.')) {
+                pendingPayments = pendingPayments.filter(payment => payment.id !== paymentId);
+                renderPendingPayments();
+                alert('Payment cancelled and removed from pending list.');
             }
         }
     </script>
