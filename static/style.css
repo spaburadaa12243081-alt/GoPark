@@ -90,7 +90,6 @@ body {
 /* ------------------------------------------------------------------- */
 /* --- MAIN CONTENT LAYOUT --- */
 /* ------------------------------------------------------------------- */
-
 .main-content {
     flex-grow: 1;
     display: flex;
@@ -119,8 +118,6 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;  
-    
-    /* Pushes the content up slightly, lifting it above the vertical center */
     margin-bottom: 100px;  
 }
 
@@ -134,8 +131,6 @@ body {
 }
 
 /* --- TITLE STYLING --- */
-
-/* Large title for the focus area (used on landing/signup left side) */
 .branding-area .title {
     font-family: 'Consolas', 'Courier New', monospace;  
     font-size: 6em;  
@@ -149,7 +144,6 @@ body {
         0 0 25px rgba(0, 224, 255, 0.5);
 }
 
-/* Tagline for the focus area (used on landing/signup left side) */
 .branding-area .tagline {
     font-family: 'Consolas', 'Courier New', monospace;  
     font-size: 1.8em;  
@@ -160,7 +154,6 @@ body {
     letter-spacing: 1px;
 }
 
-/* Titles for pages like About, Services, Contact */
 .main-content.centered-content .title {
     font-size: 3.5em;  
     margin-bottom: 10px;
@@ -174,32 +167,27 @@ body {
 }
 
 /* ------------------------------------------------------------------- */
-/* --- HIGH-TECH SKELETAL BOX DESIGN (Applies to all forms/content) --- */
-/* ------------------------------------------------------------------- */
-
+/* --- HIGH-TECH SKELETAL BOX DESIGN --- */
 .auth-box {
     background-color: rgba(10, 25, 40, 0.5);  
     padding: 35px 50px;
     border-radius: 5px;
     border: 1px solid #00E0FF;  
     box-shadow: 0 0 20px rgba(0, 224, 255, 0.8);  
-    max-width: 420px; /* Default width for login/signup */
+    max-width: 420px; 
     width: 100%;
     text-align: center;
 }
 
 /* Larger box for content pages */
 .content-box {
-    max-width: 100%; /* Allows it to take the full width of the centered-content container (max-width: 900px) */
-    text-align: left; /* Content should be left-aligned for readability */
+    max-width: 100%;
+    text-align: left; 
     padding: 40px 60px;
 }
 
-/* *** RESERVATION PAGE BOX STYLES (NEW ADDITIONS) *** */
-
-/* Specific styling for the Reservation Form Area (Left) */
+/* --- RESERVATION PAGE BOX STYLES --- */
 .reservation-form-area {
-    /* Apply base box styles but allow it to size flexibly within the reservation-container */
     background-color: rgba(10, 25, 40, 0.5);  
     padding: 35px 50px;
     border-radius: 5px;
@@ -209,9 +197,7 @@ body {
     min-width: 400px;
 }
 
-/* Specific styling for the Parking Map Area (Right) */
 .parking-map-area {
-    /* Apply base box styles but allow it to size flexibly within the reservation-container */
     background-color: rgba(10, 25, 40, 0.7); 
     border: 2px solid #00E0FF;  
     box-shadow: 0 0 25px rgba(0, 224, 255, 0.8);
@@ -220,19 +206,15 @@ body {
     text-align: center;
 }
 
-/* *** END RESERVATION PAGE BOX STYLES *** */
-
-
-/* *** NEW FORM BOX STYLE for Contact Page *** */
+/* --- FORM BOX STYLE FOR CONTACT --- */
 .form-box {
-    background-color: rgba(15, 35, 50, 0.6); /* Slightly different background for distinction */
+    background-color: rgba(15, 35, 50, 0.6);
     padding: 30px 40px;
     border-radius: 5px;
-    border: 1px solid #33FFFF; /* Brighter border */
-    box-shadow: 0 0 15px rgba(51, 255, 255, 0.7); /* Matching shadow */
-    margin-top: 30px; /* Space from contact info */
+    border: 1px solid #33FFFF;
+    box-shadow: 0 0 15px rgba(51, 255, 255, 0.7);
+    margin-top: 30px;
 }
-/* *** END NEW FORM BOX STYLE *** */
 
 .auth-box h3 {
     margin-top: 0;
@@ -273,8 +255,7 @@ body {
     border-bottom: none;
 }
 
-
-/* --- Form Fields (Inputs) --- */
+/* --- Form Fields --- */
 .auth-box input[type="text"],
 .auth-box input[type="password"],
 .auth-box input[type="email"],
@@ -304,10 +285,10 @@ body {
     box-shadow: 0 2px 5px rgba(0, 224, 255, 0.4);  
 }
 
-/* --- Button Styling (Neon Border/Fill) --- */
+/* --- Buttons --- */
 .auth-box button,
 .form-box button,
-.reservation-form-area button { /* Include reservation area button */
+.reservation-form-area button {
     width: 100%;
     padding: 14px;
     border: 2px solid #00E0FF;  
@@ -348,10 +329,10 @@ body {
     color: #33FFFF;
 }
 
-/* Applies to contact form textarea */
+/* --- Textareas --- */
 .auth-box textarea,
 .form-box textarea,
-.reservation-form-area textarea { /* Include reservation area textarea */
+.reservation-form-area textarea {
     width: calc(100% - 22px);
     height: 100px;  
     padding: 10px;  
@@ -361,4 +342,85 @@ body {
     background-color: transparent;  
     color: white;  
     border-radius: 0;
+}
+
+/* --- ADMIN DASHBOARD / CUSTOMIZE FORM --- */
+.admin-main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px;
+    transform: translate(-2px, -2px); /* 2px left, 2px up */
+}
+
+.admin-content-box {
+    background-color: rgba(10, 25, 40, 0.5);
+    padding: 40px 60px;
+    border-radius: 5px;
+    border: 2px solid #00E0FF;
+    box-shadow: 0 0 25px rgba(0, 224, 255, 0.8);
+    max-width: 900px;
+    width: 100%;
+    text-align: left;
+}
+
+.admin-content-box h2 {
+    color: #00E0FF;
+    text-shadow: 0 0 5px #00E0FF;
+    margin-bottom: 20px;
+}
+
+.admin-content-box form {
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-content-box input[type="text"],
+.admin-content-box select {
+    width: calc(100% - 22px);
+    padding: 12px;
+    margin-bottom: 15px;
+    border: none;
+    border-bottom: 2px solid #00E0FF;
+    background-color: transparent;
+    color: white;
+    transition: border-bottom-color 0.3s;
+}
+
+.admin-content-box input:focus,
+.admin-content-box select:focus {
+    border-bottom-color: #33FFFF;
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0, 224, 255, 0.4);
+}
+
+.admin-content-box button {
+    width: 200px;
+    padding: 12px;
+    border: 2px solid #00E0FF;
+    border-radius: 3px;
+    background-color: rgba(0, 224, 255, 0.1);
+    color: #00E0FF;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(0, 224, 255, 0.6);
+    margin-top: 10px;
+    transition: background-color 0.2s, box-shadow 0.2s, color 0.2s;
+}
+
+.admin-content-box button:hover {
+    background-color: #00E0FF;
+    color: #0A1928;
+    box-shadow: 0 0 20px #33FFFF;
+}
+
+.admin-content-box .field-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+/* --- ADMIN CUSTOMIZE FORM SHIFT --- */
+.admin-custom-form-box {
+    transform: translate(-2px, -2px); /* 2px left, 2px up */
 }

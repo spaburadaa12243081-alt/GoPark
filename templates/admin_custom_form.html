@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoPark! - Customize Form</title>
+    <style>
+        /* --- Global High-Tech Theme --- */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;  
+            color: #FFFFFF;
+            
+            background: 
+                linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), 
+                url('https://i.imgur.com/your-gopark-image.jpg') no-repeat center center fixed; 
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- Navigation & Header --- */
+        .header {
+            display: flex;
+            justify-content: space-between;  
+            align-items: center;
+            padding: 20px 40px;
+            background-color: rgba(10, 25, 40, 0.95);  
+            border-bottom: 2px solid #00E0FF;  
+            box-shadow: 0 4px 15px rgba(0, 224, 255, 0.1);
+        }
+
+        .logo-branding {
+            text-align: left;
+            line-height: 1.2;
+        }
+
+        .logo-title {
+            font-family: 'Consolas', 'Courier New', monospace;  
+            font-size: 1.8em;  
+            margin: 0;
+            font-weight: 700;
+            color: #FFFFFF;  
+            letter-spacing: 3px;  
+            text-shadow: 
+                0 0 5px #00E0FF,  
+                0 0 10px rgba(0, 224, 255, 0.5);
+        }
+
+        .logo-tagline {
+            font-family: 'Consolas', 'Courier New', monospace;  
+            font-size: 0.8em;  
+            margin: 0;
+            font-weight: 300;
+            color: #B0E0FF;
+            letter-spacing: 1px;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav a {
+            color: #B0E0FF;  
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.05em;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        .nav a:hover {
+            color: #00E0FF;  
+            text-shadow: 0 0 5px #00E0FF;  
+        }
+
+        .nav a.logout {
+            color: #FF4136; 
+            border: 1px solid #FF4136; 
+            padding: 5px 10px; 
+            border-radius: 3px; 
+            text-decoration: none; 
+            transition: background-color 0.3s; 
+        }
+
+        .nav a.logout:hover {
+            background-color: rgba(255, 65, 54, 0.1); 
+        }
+
+        /* Dropdown styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropbtn {
+            background-color: transparent;
+            color: #B0E0FF;
+            padding: 0;
+            font-size: 1.05em;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: color 0.3s, text-shadow 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .dropbtn:hover {
+            color: #00E0FF;
+            text-shadow: 0 0 5px #00E0FF;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(10, 25, 40, 0.95);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,224,255,0.2);
+            z-index: 1;
+            border-radius: 3px;
+            border: 1px solid #00E0FF;
+        }
+
+        .dropdown-content a {
+            color: #B0E0FF;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown-content a:hover {
+            background-color: rgba(0, 224, 255, 0.1);
+            color: #00E0FF;
+        }
+
+        /* ------------------------------------------------------------------- */
+        /* --- MAIN CONTENT LAYOUT --- */
+        /* ------------------------------------------------------------------- */
+
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            padding: 50px 50px;  
+        }
+
+        /* Layout for Admin Dashboard (centered, full-width) */
+        .main-content.centered-content {
+            flex-direction: column;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* --- HIGH-TECH SKELETAL BOX DESIGN --- */
+        .auth-box {
+            background-color: rgba(10, 25, 40, 0.5);  
+            padding: 35px 50px;
+            border-radius: 5px;
+            border: 1px solid #00E0FF;  
+            box-shadow: 0 0 20px rgba(0, 224, 255, 0.8);  
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Larger box for content pages */
+        .content-box {
+            max-width: 100%;
+            text-align: left; 
+            padding: 40px 60px;
+        }
+
+        /* *** CUSTOM FORM BOX STYLES *** */
+        .custom-form-area {
+            background-color: rgba(10, 25, 40, 0.5);  
+            padding: 35px 50px;
+            border-radius: 5px;
+            border: 2px solid #00E0FF;  
+            box-shadow: 0 0 25px rgba(0, 224, 255, 0.8); 
+            text-align: left;
+            width: 100%;
+        }
+
+        .auth-box h3 {
+            margin-top: 0;
+            color: #00E0FF;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border-bottom: 1px dashed #33FFFF;  
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* --- Form Fields --- */
+        .auth-box input[type="text"],
+        .auth-box input[type="password"],
+        .auth-box input[type="email"],
+        .auth-box input[type="tel"],
+        .custom-form-area input[type="text"],
+        .custom-form-area input[type="email"],
+        .custom-form-area input[type="date"],
+        .custom-form-area select {
+            width: calc(100% - 22px);
+            padding: 12px;
+            margin-bottom: 15px;
+            border: none;  
+            border-bottom: 2px solid #00E0FF;  
+            background-color: transparent;  
+            color: white;
+            border-radius: 0;  
+            box-shadow: none;
+            transition: border-bottom-color 0.3s;
+        }
+
+        .auth-box input:focus,
+        .custom-form-area input:focus,
+        .custom-form-area select:focus {
+            border-bottom-color: #33FFFF;
+            outline: none;
+            box-shadow: 0 2px 5px rgba(0, 224, 255, 0.4);  
+        }
+
+        /* --- Buttons --- */
+        .auth-box button,
+        .custom-form-area button {
+            padding: 14px;
+            border: 2px solid #00E0FF;  
+            border-radius: 3px;
+            background-color: rgba(0, 224, 255, 0.1);  
+            color: #00E0FF;  
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(0, 224, 255, 0.6);
+            transition: background-color 0.2s, box-shadow 0.2s, color 0.2s;
+        }
+
+        .auth-box button:hover,
+        .custom-form-area button:hover {
+            background-color: #00E0FF;  
+            color: #0A1928;  
+            box-shadow: 0 0 20px #33FFFF;
+        }
+
+        /* Custom Form Specific Styles */
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-title {
+            color: #00E0FF;
+            font-size: 2em;
+            margin: 0;
+        }
+
+        .admin-info {
+            color: #B0E0FF;
+            font-size: 1.1em;
+        }
+
+        .form-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: rgba(0, 224, 255, 0.05);
+            border-radius: 5px;
+            border: 1px solid rgba(0, 224, 255, 0.3);
+        }
+
+        .section-title {
+            color: #00E0FF;
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            border-bottom: 1px dashed #33FFFF;
+            padding-bottom: 10px;
+        }
+
+        .field-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 30px;
+        }
+
+        .field-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(0, 224, 255, 0.3);
+            border-radius: 5px;
+            background-color: rgba(10, 25, 40, 0.3);
+        }
+
+        .field-info {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .field-label {
+            color: #B0E0FF;
+            font-weight: 500;
+            min-width: 150px;
+        }
+
+        .field-type {
+            color: #90A4AE;
+            font-size: 0.9em;
+            padding: 5px 10px;
+            background-color: rgba(0, 224, 255, 0.1);
+            border-radius: 3px;
+        }
+
+        .field-section {
+            color: #FFA500;
+            font-size: 0.8em;
+            padding: 3px 8px;
+            background-color: rgba(255, 165, 0, 0.1);
+            border-radius: 3px;
+        }
+
+        .field-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            padding: 8px 15px;
+            border: 1px solid #00E0FF;
+            background-color: transparent;
+            color: #00E0FF;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 0.9em;
+        }
+
+        .action-btn:hover {
+            background-color: rgba(0, 224, 255, 0.2);
+        }
+
+        .toggle-btn {
+            background-color: rgba(0, 255, 0, 0.1);
+            border-color: #0F0;
+            color: #0F0;
+        }
+
+        .toggle-btn.inactive {
+            background-color: rgba(255, 0, 0, 0.1);
+            border-color: #F00;
+            color: #F00;
+        }
+
+        .add-field-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .add-field-form input,
+        .add-field-form select {
+            flex: 1;
+            min-width: 150px;
+            padding: 10px;
+            border: none;
+            border-bottom: 2px solid #00E0FF;
+            background-color: transparent;
+            color: white;
+        }
+
+        .add-field-form button {
+            width: auto;
+            padding: 10px 20px;
+        }
+
+        .edit-field-form {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .edit-field-form input,
+        .edit-field-form select {
+            flex: 1;
+            min-width: 120px;
+            padding: 8px;
+            border: none;
+            border-bottom: 2px solid #00E0FF;
+            background-color: transparent;
+            color: white;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-active {
+            background-color: #0F0;
+            box-shadow: 0 0 5px #0F0;
+        }
+
+        .status-inactive {
+            background-color: #F00;
+            box-shadow: 0 0 5px #F00;
+        }
+
+        .preview-note {
+            background-color: rgba(255, 193, 7, 0.1);
+            border: 1px solid #FFC107;
+            color: #FFC107;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+
+        .empty-message {
+            color: #90A4AE;
+            font-style: italic;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-branding">
+            <h1 class="logo-title">GoPark!</h1>
+            <p class="logo-tagline">No Stress. Just Park.</p>
+        </div>
+        <nav class="nav">
+            <a href="/admin/dashboard">Admin Dashboard</a>
+            <div class="dropdown">
+                <button class="dropbtn">Total Reservations <span style="font-size: 0.8em;">▼</span></button>
+                <div class="dropdown-content">
+                    <a href="#">Pending Payments</a>
+                    <a href="#">Completed Payments</a>
+                </div>
+            </div>
+            <a href="/" class="logout">Logout</a>
+        </nav>
+    </header>
+
+    <div class="main-content centered-content">
+        <div class="custom-form-area auth-box content-box">
+            <div class="dashboard-header">
+                <h1 class="dashboard-title">Customize Reservation Form</h1>
+                <div class="admin-info">Welcome, Administrator!</div>
+            </div>
+
+            <!-- Add New Field Section -->
+            <div class="form-section">
+                <h3 class="section-title">Add New Field</h3>
+                <form class="add-field-form" id="addFieldForm">
+                    <input type="text" name="label" placeholder="Field Label" required>
+                    <input type="text" name="field_type" placeholder="Field Type (e.g., text, email, date)" required>
+                    <input type="text" name="section" placeholder="Section (e.g., personal_info)" required>
+                    <button type="submit">Add Field</button>
+                </form>
+            </div>
+
+            <!-- Current Form Fields Sections -->
+            <div class="form-section">
+                <h3 class="section-title">Personal Information Fields</h3>
+                <ul class="field-list" id="personal-fields">
+                    <li class="empty-message">No custom fields added yet</li>
+                </ul>
+            </div>
+
+            <div class="form-section">
+                <h3 class="section-title">Vehicle Information Fields</h3>
+                <ul class="field-list" id="vehicle-fields">
+                    <li class="empty-message">No custom fields added yet</li>
+                </ul>
+            </div>
+
+            <div class="form-section">
+                <h3 class="section-title">Reservation Details Fields</h3>
+                <ul class="field-list" id="reservation-fields">
+                    <li class="empty-message">No custom fields added yet</li>
+                </ul>
+            </div>
+
+            <div class="form-section">
+                <h3 class="section-title">Additional Information Fields</h3>
+                <ul class="field-list" id="additional-fields">
+                    <li class="empty-message">No custom fields added yet</li>
+                </ul>
+            </div>
+
+            <div class="preview-note">
+                <strong>Note:</strong> Changes made here will be reflected in the user reservation form. 
+                Enabled fields will appear in the reservation form for users to fill out. 
+                Disabled fields will be hidden from users but remain in the system for future use.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample data for form fields
+        let formFields = [
+            // Default fields that should always be in the reservation form
+            { id: 1, label: "Full Name", field_type: "text", section: "personal_info", is_active: true },
+            { id: 2, label: "Phone Number", field_type: "tel", section: "personal_info", is_active: true },
+            { id: 3, label: "Email Address", field_type: "email", section: "personal_info", is_active: true },
+            { id: 4, label: "Vehicle Type", field_type: "text", section: "vehicle_info", is_active: true },
+            { id: 5, label: "License Plate", field_type: "text", section: "vehicle_info", is_active: true },
+            { id: 6, label: "Reservation Date", field_type: "date", section: "reservation_info", is_active: true },
+            { id: 7, label: "Arrival Time", field_type: "time", section: "reservation_info", is_active: true },
+            { id: 8, label: "Departure Time", field_type: "time", section: "reservation_info", is_active: true },
+            { id: 9, label: "Parking Duration", field_type: "text", section: "reservation_info", is_active: true },
+            { id: 10, label: "Parking Spot", field_type: "text", section: "reservation_info", is_active: true }
+        ];
+
+        // Next ID for new fields
+        let nextId = 11;
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize dropdown functionality
+            const dropbtn = document.querySelector('.dropbtn');
+            const dropdownContent = document.querySelector('.dropdown-content');
+
+            if (dropbtn && dropdownContent) {
+                dropbtn.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+                });
+
+                // Close dropdown when clicking outside
+                window.addEventListener('click', function(event) {
+                    if (!event.target.matches('.dropbtn') && !event.target.closest('.dropdown')) {
+                        dropdownContent.style.display = 'none';
+                    }
+                });
+            }
+
+            // Render form fields
+            renderFormFields();
+
+            // Handle form submission for adding new field
+            document.getElementById('addFieldForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+                const label = formData.get('label');
+                const field_type = formData.get('field_type');
+                const section = formData.get('section');
+                
+                // Add new field
+                addNewField(label, field_type, section);
+                
+                // Reset form
+                this.reset();
+            });
+        });
+
+        // Function to render form fields
+        function renderFormFields() {
+            // Clear all field lists
+            document.getElementById('personal-fields').innerHTML = '';
+            document.getElementById('vehicle-fields').innerHTML = '';
+            document.getElementById('reservation-fields').innerHTML = '';
+            document.getElementById('additional-fields').innerHTML = '';
+            
+            // Group fields by section
+            const personalFields = formFields.filter(field => field.section === 'personal_info');
+            const vehicleFields = formFields.filter(field => field.section === 'vehicle_info');
+            const reservationFields = formFields.filter(field => field.section === 'reservation_info');
+            const additionalFields = formFields.filter(field => field.section === 'additional_info');
+            
+            // Render each section
+            renderFieldSection('personal-fields', personalFields);
+            renderFieldSection('vehicle-fields', vehicleFields);
+            renderFieldSection('reservation-fields', reservationFields);
+            renderFieldSection('additional-fields', additionalFields);
+        }
+
+        // Function to render a field section
+        function renderFieldSection(sectionId, fields) {
+            const sectionElement = document.getElementById(sectionId);
+            
+            if (fields.length === 0) {
+                sectionElement.innerHTML = '<li class="empty-message">No custom fields added yet</li>';
+                return;
+            }
+            
+            sectionElement.innerHTML = '';
+            
+            fields.forEach(field => {
+                const fieldItem = document.createElement('li');
+                fieldItem.className = 'field-item';
+                fieldItem.innerHTML = `
+                    <div class="field-info">
+                        <span class="status-indicator ${field.is_active ? 'status-active' : 'status-inactive'}"></span>
+                        <span class="field-label">${field.label}</span>
+                        <span class="field-type">${field.field_type}</span>
+                        <span class="field-section">${getSectionDisplayName(field.section)}</span>
+                    </div>
+                    <div class="field-actions">
+                        <button class="action-btn edit-btn" data-id="${field.id}">Edit</button>
+                        <button class="action-btn toggle-btn ${field.is_active ? '' : 'inactive'}" data-id="${field.id}">
+                            ${field.is_active ? 'Disable' : 'Enable'}
+                        </button>
+                        <button class="action-btn delete-btn" data-id="${field.id}">Delete</button>
+                    </div>
+                `;
+                sectionElement.appendChild(fieldItem);
+            });
+            
+            // Add event listeners to buttons
+            document.querySelectorAll('.edit-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const fieldId = parseInt(this.getAttribute('data-id'));
+                    editField(fieldId);
+                });
+            });
+            
+            document.querySelectorAll('.toggle-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const fieldId = parseInt(this.getAttribute('data-id'));
+                    toggleField(fieldId);
+                });
+            });
+            
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const fieldId = parseInt(this.getAttribute('data-id'));
+                    deleteField(fieldId);
+                });
+            });
+        }
+
+        // Function to get display name for section
+        function getSectionDisplayName(section) {
+            const sectionNames = {
+                'personal_info': 'Personal Info',
+                'vehicle_info': 'Vehicle Info',
+                'reservation_info': 'Reservation',
+                'additional_info': 'Additional'
+            };
+            return sectionNames[section] || section;
+        }
+
+        // Function to add a new field
+        function addNewField(label, field_type, section) {
+            const newField = {
+                id: nextId++,
+                label: label,
+                field_type: field_type,
+                section: section,
+                is_active: true
+            };
+            
+            formFields.push(newField);
+            renderFormFields();
+            
+            // Show success message
+            alert(`Field "${label}" added successfully!`);
+        }
+
+        // Function to edit a field
+        function editField(fieldId) {
+            const field = formFields.find(f => f.id === fieldId);
+            if (!field) return;
+            
+            const newLabel = prompt('Enter new label for this field:', field.label);
+            if (newLabel && newLabel.trim() !== '') {
+                field.label = newLabel.trim();
+                renderFormFields();
+                alert('Field updated successfully!');
+            }
+        }
+
+        // Function to toggle field status
+        function toggleField(fieldId) {
+            const field = formFields.find(f => f.id === fieldId);
+            if (!field) return;
+            
+            field.is_active = !field.is_active;
+            renderFormFields();
+            
+            const status = field.is_active ? 'enabled' : 'disabled';
+            alert(`Field "${field.label}" has been ${status}`);
+        }
+
+        // Function to delete a field
+        function deleteField(fieldId) {
+            const field = formFields.find(f => f.id === fieldId);
+            if (!field) return;
+            
+            if (confirm(`Are you sure you want to delete the field "${field.label}"?`)) {
+                formFields = formFields.filter(f => f.id !== fieldId);
+                renderFormFields();
+                alert(`Field "${field.label}" has been deleted`);
+            }
+        }
+    </script>
+</body>
+</html>

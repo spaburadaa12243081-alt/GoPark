@@ -5,6 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GoPark! - Login</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Admin or general message box */
+        .message-box {
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            border: 1px solid #33FFFF;
+            background-color: rgba(0, 224, 255, 0.15);
+            color: #007BFF;
+        }
+        .message-box.admin {
+            background-color: rgba(255, 221, 0, 0.2);
+            border-color: #FFD700;
+            color: #B8860B;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     <header class="header">
@@ -17,7 +35,7 @@
             <a href="/about">About</a>
             <a href="/services">Services</a>
             <a href="/contact">Contact</a>
-            </nav>
+        </nav>
     </header>
 
     <div class="main-content">
@@ -29,7 +47,8 @@
         <div class="auth-area">
             
             {% if message %}
-                <div style="background-color: rgba(0, 224, 255, 0.2); color: #33FFFF; padding: 10px; border-radius: 5px; margin-bottom: 15px; border: 1px solid #33FFFF;">
+                <!-- Detect if message contains "Administrator" and apply admin styling -->
+                <div class="message-box {% if 'Administrator' in message %}admin{% endif %}">
                     {{ message }}
                 </div>
             {% endif %}

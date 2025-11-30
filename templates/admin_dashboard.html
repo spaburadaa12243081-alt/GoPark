@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoPark! - Admin Dashboard</title>
+    <style>
+        /* --- Global High-Tech Theme --- */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;  
+            color: #FFFFFF;
+            
+            background: 
+                linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), 
+                url('https://i.imgur.com/your-gopark-image.jpg') no-repeat center center fixed; 
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- Navigation & Header --- */
+        .header {
+            display: flex;
+            justify-content: space-between;  
+            align-items: center;
+            padding: 20px 40px;
+            background-color: rgba(10, 25, 40, 0.95);  
+            border-bottom: 2px solid #00E0FF;  
+            box-shadow: 0 4px 15px rgba(0, 224, 255, 0.1);
+        }
+
+        .logo-branding {
+            text-align: left;
+            line-height: 1.2;
+        }
+
+        .logo-title {
+            font-family: 'Consolas', 'Courier New', monospace;  
+            font-size: 1.8em;  
+            margin: 0;
+            font-weight: 700;
+            color: #FFFFFF;  
+            letter-spacing: 3px;  
+            text-shadow: 
+                0 0 5px #00E0FF,  
+                0 0 10px rgba(0, 224, 255, 0.5);
+        }
+
+        .logo-tagline {
+            font-family: 'Consolas', 'Courier New', monospace;  
+            font-size: 0.8em;  
+            margin: 0;
+            font-weight: 300;
+            color: #B0E0FF;
+            letter-spacing: 1px;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav a {
+            color: #B0E0FF;  
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.05em;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        .nav a:hover {
+            color: #00E0FF;  
+            text-shadow: 0 0 5px #00E0FF;  
+        }
+
+        .nav a.logout {
+            color: #FF4136; 
+            border: 1px solid #FF4136; 
+            padding: 5px 10px; 
+            border-radius: 3px; 
+            text-decoration: none; 
+            transition: background-color 0.3s; 
+        }
+
+        .nav a.logout:hover {
+            background-color: rgba(255, 65, 54, 0.1); 
+        }
+
+        /* Dropdown styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropbtn {
+            background-color: transparent;
+            color: #B0E0FF;
+            padding: 0;
+            font-size: 1.05em;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: color 0.3s, text-shadow 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .dropbtn:hover {
+            color: #00E0FF;
+            text-shadow: 0 0 5px #00E0FF;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(10, 25, 40, 0.95);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,224,255,0.2);
+            z-index: 1;
+            border-radius: 3px;
+            border: 1px solid #00E0FF;
+        }
+
+        .dropdown-content a {
+            color: #B0E0FF;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown-content a:hover {
+            background-color: rgba(0, 224, 255, 0.1);
+            color: #00E0FF;
+        }
+
+        /* ------------------------------------------------------------------- */
+        /* --- MAIN CONTENT LAYOUT --- */
+        /* ------------------------------------------------------------------- */
+
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            padding: 50px 50px;  
+        }
+
+        /* Layout for Admin Dashboard (centered, full-width) */
+        .main-content.centered-content {
+            flex-direction: column;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* --- HIGH-TECH SKELETAL BOX DESIGN --- */
+        .auth-box {
+            background-color: rgba(10, 25, 40, 0.5);  
+            padding: 35px 50px;
+            border-radius: 5px;
+            border: 1px solid #00E0FF;  
+            box-shadow: 0 0 20px rgba(0, 224, 255, 0.8);  
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Larger box for content pages */
+        .content-box {
+            max-width: 100%;
+            text-align: left; 
+            padding: 40px 60px;
+        }
+
+        /* *** ADMIN DASHBOARD BOX STYLES *** */
+        .admin-dashboard-area {
+            background-color: rgba(10, 25, 40, 0.5);  
+            padding: 35px 50px;
+            border-radius: 5px;
+            border: 2px solid #00E0FF;  
+            box-shadow: 0 0 25px rgba(0, 224, 255, 0.8); 
+            text-align: left;
+            width: 100%;
+        }
+
+        .auth-box h3 {
+            margin-top: 0;
+            color: #00E0FF;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border-bottom: 1px dashed #33FFFF;  
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* --- Form Fields --- */
+        .auth-box input[type="text"],
+        .auth-box input[type="password"],
+        .auth-box input[type="email"],
+        .auth-box input[type="tel"],
+        .admin-dashboard-area input[type="text"],
+        .admin-dashboard-area input[type="email"],
+        .admin-dashboard-area input[type="date"] {
+            width: calc(100% - 22px);
+            padding: 12px;
+            margin-bottom: 15px;
+            border: none;  
+            border-bottom: 2px solid #00E0FF;  
+            background-color: transparent;  
+            color: white;
+            border-radius: 0;  
+            box-shadow: none;
+            transition: border-bottom-color 0.3s;
+        }
+
+        .auth-box input:focus,
+        .admin-dashboard-area input:focus {
+            border-bottom-color: #33FFFF;
+            outline: none;
+            box-shadow: 0 2px 5px rgba(0, 224, 255, 0.4);  
+        }
+
+        /* --- Buttons --- */
+        .auth-box button,
+        .admin-dashboard-area button {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #00E0FF;  
+            border-radius: 3px;
+            background-color: rgba(0, 224, 255, 0.1);  
+            color: #00E0FF;  
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(0, 224, 255, 0.6);
+            transition: background-color 0.2s, box-shadow 0.2s, color 0.2s;
+        }
+
+        .auth-box button:hover,
+        .admin-dashboard-area button:hover {
+            background-color: #00E0FF;  
+            color: #0A1928;  
+            box-shadow: 0 0 20px #33FFFF;
+        }
+
+        /* Admin Dashboard Specific Styles */
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-title {
+            color: #00E0FF;
+            font-size: 2em;
+            margin: 0;
+        }
+
+        .admin-info {
+            color: #B0E0FF;
+            font-size: 1.1em;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background-color: rgba(0, 224, 255, 0.1);
+            border: 1px solid #00E0FF;
+            border-radius: 5px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 224, 255, 0.3);
+        }
+
+        .metric-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #33FFFF;
+            margin-bottom: 10px;
+        }
+
+        .metric-label {
+            color: #B0E0FF;
+            font-size: 1.1em;
+        }
+
+        .reservations-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .reservations-table th,
+        .reservations-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 224, 255, 0.3);
+        }
+
+        .reservations-table th {
+            color: #00E0FF;
+            font-weight: 600;
+            background-color: rgba(0, 224, 255, 0.1);
+        }
+
+        .reservations-table td {
+            color: #FFFFFF;
+        }
+
+        .status-pending {
+            color: #FFC107;
+        }
+
+        .status-paid {
+            color: #28A745;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            padding: 5px 10px;
+            border: 1px solid #00E0FF;
+            background-color: transparent;
+            color: #00E0FF;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .action-btn:hover {
+            background-color: rgba(0, 224, 255, 0.2);
+        }
+
+        .custom-form-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(0, 224, 255, 0.3);
+        }
+
+        .custom-form-section h3 {
+            color: #00E0FF;
+            margin-bottom: 20px;
+        }
+
+        .field-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .field-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(0, 224, 255, 0.2);
+        }
+
+        .field-info {
+            flex-grow: 1;
+        }
+
+        .field-label {
+            color: #B0E0FF;
+            font-weight: 500;
+        }
+
+        .field-type {
+            color: #90A4AE;
+            font-size: 0.9em;
+        }
+
+        .field-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .add-field-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .add-field-form input,
+        .add-field-form select {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-bottom: 2px solid #00E0FF;
+            background-color: transparent;
+            color: white;
+        }
+
+        .add-field-form button {
+            width: auto;
+            padding: 10px 20px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-branding">
+            <h1 class="logo-title">GoPark!</h1>
+            <p class="logo-tagline">No Stress. Just Park.</p>
+        </div>
+        <nav class="nav">
+            <a href="/admin/custom-form">Customize Form</a>
+            <div class="dropdown">
+                <button class="dropbtn">Total Reservations <span style="font-size: 0.8em;">▼</span></button>
+                <div class="dropdown-content">
+                    <a href="#">Pending Payments</a>
+                    <a href="#">Completed Payments</a>
+                </div>
+            </div>
+            <a href="/" class="logout">Logout</a>
+        </nav>
+    </header>
+
+    <div class="main-content centered-content">
+        <div class="admin-dashboard-area auth-box content-box">
+            <div class="dashboard-header">
+                <h1 class="dashboard-title">Admin Dashboard</h1>
+                <div class="admin-info">Welcome, Admin!</div>
+            </div>
+
+            <!-- Metrics Overview -->
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-value">150</div>
+                    <div class="metric-label">Total Reservations</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">25</div>
+                    <div class="metric-label">Pending Payments</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">125</div>
+                    <div class="metric-label">Completed Payments</div>
+                </div>
+            </div>
+
+            <!-- Reservations Table -->
+            <h3>Recent Reservations</h3>
+            <table class="reservations-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Full Name</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th>Vehicle Type</th>
+                        <th>Plate Number</th>
+                        <th>Date</th>
+                        <th>Arrival</th>
+                        <th>Departure</th>
+                        <th>Slot</th>
+                        <th>Cost</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>101</td>
+                        <td>John Doe</td>
+                        <td>123-456-7890</td>
+                        <td>john@example.com</td>
+                        <td>Sedan</td>
+                        <td>ABC123</td>
+                        <td>2023-10-15</td>
+                        <td>09:00</td>
+                        <td>17:00</td>
+                        <td>A12</td>
+                        <td>₱250</td>
+                        <td class="status-paid">Paid</td>
+                        <td class="action-buttons">
+                            <button class="action-btn" onclick="viewReservation(101)">View</button>
+                            <button class="action-btn" onclick="editReservation(101)">Edit</button>
+                            <button class="action-btn" onclick="deleteReservation(101)">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>102</td>
+                        <td>Jane Smith</td>
+                        <td>098-765-4321</td>
+                        <td>jane@example.com</td>
+                        <td>SUV</td>
+                        <td>XYZ789</td>
+                        <td>2023-10-16</td>
+                        <td>10:30</td>
+                        <td>15:45</td>
+                        <td>B05</td>
+                        <td>₱180</td>
+                        <td class="status-pending">Pending</td>
+                        <td class="action-buttons">
+                            <button class="action-btn" onclick="viewReservation(102)">View</button>
+                            <button class="action-btn" onclick="editReservation(102)">Edit</button>
+                            <button class="action-btn" onclick="deleteReservation(102)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Custom Form Fields Section -->
+            <div class="custom-form-section">
+                <h3>Custom Form Fields</h3>
+                <form class="add-field-form" action="/admin/add-field" method="post">
+                    <input type="text" name="label" placeholder="Field Label" required>
+                    <select name="field_type" required>
+                        <option value="text">Text</option>
+                        <option value="email">Email</option>
+                        <option value="date">Date</option>
+                        <option value="time">Time</option>
+                        <option value="textarea">Textarea</option>
+                    </select>
+                    <button type="submit">Add Field</button>
+                </form>
+                <ul class="field-list">
+                    <li class="field-item">
+                        <div class="field-info">
+                            <div class="field-label">Company Name</div>
+                            <div class="field-type">Text</div>
+                        </div>
+                        <div class="field-actions">
+                            <form action="/admin/edit-field/1" method="post" style="display: inline;">
+                                <input type="text" name="label" value="Company Name" required>
+                                <button type="submit" class="action-btn">Edit</button>
+                            </form>
+                            <form action="/admin/delete-field/1" method="post" style="display: inline;">
+                                <button type="submit" class="action-btn" onclick="return confirm('Are you sure?')">Delete</button>
+                            </form>
+                        </div>
+                    </li>
+                    <li class="field-item">
+                        <div class="field-info">
+                            <div class="field-label">Special Requirements</div>
+                            <div class="field-type">Textarea</div>
+                        </div>
+                        <div class="field-actions">
+                            <form action="/admin/edit-field/2" method="post" style="display: inline;">
+                                <input type="text" name="label" value="Special Requirements" required>
+                                <button type="submit" class="action-btn">Edit</button>
+                            </form>
+                            <form action="/admin/delete-field/2" method="post" style="display: inline;">
+                                <button type="submit" class="action-btn" onclick="return confirm('Are you sure?')">Delete</button>
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dropdown toggle on click
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropbtn = document.querySelector('.dropbtn');
+            const dropdownContent = document.querySelector('.dropdown-content');
+
+            dropbtn.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent any default behavior
+                dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+            });
+
+            // Close dropdown when clicking outside
+            window.addEventListener('click', function(event) {
+                if (!event.target.matches('.dropbtn') && !event.target.closest('.dropdown')) {
+                    dropdownContent.style.display = 'none';
+                }
+            });
+        });
+
+        function viewReservation(id) {
+            alert('View reservation ' + id);
+        }
+
+        function editReservation(id) {
+            alert('Edit reservation ' + id);
+        }
+
+        function deleteReservation(id) {
+            if (confirm('Are you sure you want to delete reservation ' + id + '?')) {
+                alert('Delete reservation ' + id);
+            }
+        }
+    </script>
+</body>
+</html>

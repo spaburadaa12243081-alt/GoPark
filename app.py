@@ -6,7 +6,7 @@ from flask_bcrypt import Bcrypt
 from datetime import datetime, timedelta
 import math
 
-# --- Define the Flask App ---
+# --- Define the Flask App --- 
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
 bcrypt = Bcrypt(app)
@@ -164,7 +164,7 @@ def payment_dashboard():
 
 
 # -------------------------------------------------------------------
-# --- LOGIN (with Admin Support) ---
+# --- LOGIN ---
 # -------------------------------------------------------------------
 
 @app.route('/login', methods=['POST'])
@@ -172,16 +172,12 @@ def login():
     username_attempt = request.form.get('username')
     password = request.form.get('password')
 
-    # --- Admin login check ---
-    if username_attempt == "goparkadmin@gmail.com":
-        if password == "CSSgopark2025":
-            response = make_response(redirect(url_for('admin_dashboard')))
-            response.set_cookie("username", "Admin", max_age=60*60*24)
-            return response
-        else:
-            return redirect(url_for('landing_page', message="Incorrect admin password."))
+    # Admin login check
+    if username_attempt.lower() == "goparkadmin@gmail.com" and password == "CSSgopark2025":
+        response = make_response(redirect(url_for('admin_dashboard')))
+        response.set_cookie("username", "Administrator", max_age=60*60*24)
+        return response
 
-    # --- Normal user login ---
     connection = create_db_connection()
     if not connection:
         return redirect(url_for('landing_page', message="Cannot connect to database."))
@@ -191,32 +187,15 @@ def login():
         cursor.execute("SELECT * FROM users WHERE username = %s", (username_attempt,))
         user_data = cursor.fetchone()
 
-        if user_data:
-            # Prevent signup with admin email
-            if user_data['email'] == "goparkadmin@gmail.com":
-                return redirect(url_for('landing_page', message="Administrator accounts cannot be registered here. Please login using the admin portal."))
-
-            if bcrypt.check_password_hash(user_data['password'], password):
-                response = make_response(redirect(url_for('reservation_dashboard')))
-                response.set_cookie("username", user_data['username'], max_age=60*60*24)
-                return response
-            else:
-                return redirect(url_for('landing_page', message="Incorrect username or password."))
+        if user_data and bcrypt.check_password_hash(user_data['password'], password):
+            response = make_response(redirect(url_for('reservation_dashboard')))
+            response.set_cookie("username", user_data['username'], max_age=60*60*24)
+            return response
         else:
-            return redirect(url_for('landing_page', message="User not found. Please sign up first."))
+            return redirect(url_for('landing_page', message="Incorrect username or password."))
 
     finally:
         close_db_connection(connection, cursor)
-
-
-# -------------------------------------------------------------------
-# --- ADMIN DASHBOARD ---
-# -------------------------------------------------------------------
-
-@app.route('/admin')
-def admin_dashboard():
-    # Placeholder admin page
-    return render_template('admin_dashboard.html')
 
 
 # -------------------------------------------------------------------
@@ -230,6 +209,10 @@ def signup():
         email = request.form.get('email')
         password = request.form.get('password')
         confirm_password = request.form.get('confirm_password')
+
+        # Prevent admin from signing up
+        if email.lower() == "goparkadmin@gmail.com":
+            return redirect(url_for('landing_page', message="Administrator accounts cannot be registered here. Please log in using the admin portal."))
 
         if password != confirm_password:
             return redirect(url_for('landing_page', message="Passwords do not match."))
@@ -342,6 +325,126 @@ def receipt(payment_id):
 
     return render_template('receipt.html', payment=payment, reservation=reservation)
 
+
+# -------------------------------------------------------------------
+# --- ADMIN DASHBOARD (single-page with reservation list) ----------
+# -------------------------------------------------------------------
+@app.route('/admin/dashboard')
+def admin_dashboard():
+    connection = create_db_connection()
+    if not connection:
+        return "DB error", 500
+    cursor = connection.cursor(dictionary=True)
+
+    # ----- counters -----
+    cursor.execute("SELECT COUNT(*) c FROM reservations")
+    total_reservations = cursor.fetchone()['c']
+    cursor.execute("SELECT COUNT(*) c FROM reservations WHERE status='pending'")
+    pending_payments = cursor.fetchone()['c']
+    cursor.execute("SELECT COUNT(*) c FROM reservations WHERE status='paid'")
+    completed_payments = cursor.fetchone()['c']
+
+    # ----- full reservation list -----
+    cursor.execute("""SELECT id, full_name, phone_number, email, vehicle_type,
+                             plate_number, reservation_date, arrival_time,
+                             departure_time, parking_slot, total_cost, status
+                      FROM reservations
+                      ORDER BY reservation_date DESC, arrival_time DESC""")
+    reservations = cursor.fetchall()
+
+    # ----- custom form fields -----
+    cursor.execute("SELECT * FROM custom_form_fields ORDER BY id")
+    fields = cursor.fetchall()
+
+    cursor.close()
+    connection.close()
+
+    username = request.cookies.get("username", "Administrator")
+    return render_template('admin_dashboard.html',
+                         total_reservations=total_reservations,
+                         pending_payments=pending_payments,
+                         completed_payments=completed_payments,
+                         reservations=reservations,
+                         fields=fields,
+                         username=username)
+
+
+# -------------------------------------------------------------------
+# --- ADMIN: CUSTOMIZE USER PARKING RESERVATION FORM ---
+# -------------------------------------------------------------------
+
+@app.route('/admin/custom-form')
+def admin_custom_form():
+    connection = create_db_connection()
+    if not connection:
+        return "Database connection error."
+
+    try:
+        cursor = connection.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM custom_form_fields ORDER BY id ASC")
+        fields = cursor.fetchall()
+    finally:
+        close_db_connection(connection, cursor)
+
+    return render_template('admin_custom_form.html', fields=fields)
+
+
+@app.route('/admin/add-field', methods=['POST'])
+def admin_add_field():
+    label = request.form.get('label')
+    field_type = request.form.get('field_type')
+
+    connection = create_db_connection()
+    if not connection:
+        return "Database connection error."
+
+    try:
+        cursor = connection.cursor()
+        cursor.execute("""
+            INSERT INTO custom_form_fields (label, field_type)
+            VALUES (%s, %s)
+        """, (label, field_type))
+        connection.commit()
+    finally:
+        close_db_connection(connection, cursor)
+
+    return redirect(url_for('admin_custom_form'))
+
+
+@app.route('/admin/delete-field/<int:field_id>')
+def admin_delete_field(field_id):
+    connection = create_db_connection()
+    if not connection:
+        return "Database connection error."
+
+    try:
+        cursor = connection.cursor()
+        cursor.execute("DELETE FROM custom_form_fields WHERE id = %s", (field_id,))
+        connection.commit()
+    finally:
+        close_db_connection(connection, cursor)
+
+    return redirect(url_for('admin_custom_form'))
+
+
+@app.route('/admin/edit-field/<int:field_id>', methods=['POST'])
+def admin_edit_field(field_id):
+    new_label = request.form.get('label')
+
+    connection = create_db_connection()
+    if not connection:
+        return "Database connection error."
+
+    try:
+        cursor = connection.cursor()
+        cursor.execute("""
+            UPDATE custom_form_fields SET label = %s WHERE id = %s
+        """, (new_label, field_id))
+        connection.commit()
+    finally:
+        close_db_connection(connection, cursor)
+
+    return redirect(url_for('admin_custom_form'))
 
 # --- Run the App ---
 if __name__ == '__main__':
